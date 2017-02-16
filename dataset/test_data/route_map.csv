@@ -3,10 +3,50 @@ id,route_id,stop_no,loc_id,road_id
 1,100,2,Fort,A1
 2,100,3,Galle Face,A1
 3,100,4,Kollupitiya,A2
-4,100,5,Keselwatta,A2
-5,100,6,Bambalapitiya,A2
+4,100,5,Keselwatta,R A De Mel
+5,100,6,Bambalapitiya,R A De Mel
 6,100,7,Wellawatta,A2
 7,100,8,Dehiwala,A2
 8,100,9,Mt. Lavinia,A2
 9,100,10,Ratmalana,A2
 10,100,11,Moratuwa,A2
+11,100,12,Old Galle Road,A2
+12,100,13,Walana,A2
+13,100,14,Panadura,A2
+14,100.2,1,Panadura,A2
+15,100.2,2,Walana,A2
+16,100.2,3,Old Galle Road,A2
+17,100.2,4,Moratuwa,A2
+18,100.2,5,Ratmalana,A2
+19,100.2,6,Mt. Lavinia,A2
+20,100.2,7,Dehiwala,A2
+21,100.2,8,Wellawatta,A2
+22,100.2,9,Bambalapitiya,A2
+23,100.2,10,Keselwatta,A2
+24,100.2,11,Kollupitiya,A2
+25,100.2,12,Galle Face,A1
+26,100.2,13,Fort,A1
+27,100.2,14,Pettah,A1
+28,163,1,Dehiwala,A2
+29,163,2,Kalubowil,B229
+30,163,3,Kohuwala,B229
+31,163,4,Nugegoda,B120
+32,163,5,Pita Kotte,B345
+33,163,6,Ethul Kotte,B120
+34,163,7,Battaramulla,B240
+35,117,1,Nugegoda,B134
+37,117,2,Kattiya Junction,B389
+38,117,3,Gamsabha Junction,B389
+39,117,4,Pepiliyana Road,B389
+40,117,5,Pepiliyana,B389
+41,117,6,Bellanwila Junction,B389
+42,117,7,Attidiya Road,B389
+43,117,8,Ratmalana,B389
+44,117.2,1,Ratmalana,B389
+45,117.2,2,Attidiya Road,B389
+46,117.2,3,Bellanwila Junction,B389
+47,117.2,4,Pepiliyana,B389
+48,117.2,5,Pepiliyana Road,B389
+49,117.2,6,Gamsabha Junction,B389
+50,117.2,7,Kattiya Junction,B389
+51,117.2,8,Nugegoda,B134
