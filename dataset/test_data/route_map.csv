@@ -1,0 +1,12 @@
+id,route_id,stop_no,loc_id,road_id
+0,100,1,Pettah,A1
+1,100,2,Fort,A1
+2,100,3,Galle Face,A1
+3,100,4,Kollupitiya,A2
+4,100,5,Keselwatta,A2
+5,100,6,Bambalapitiya,A2
+6,100,7,Wellawatta,A2
+7,100,8,Dehiwala,A2
+8,100,9,Mt. Lavinia,A2
+9,100,10,Ratmalana,A2
+10,100,11,Moratuwa,A2
