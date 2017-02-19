@@ -8,7 +8,9 @@
   "dependencies": {
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-foundation": "^0.7.0"
+    "react-foundation": "^0.7.0",
+    "react-google-autocomplete": "^1.0.12",
+    "react-helmet": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
