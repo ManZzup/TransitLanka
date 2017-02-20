@@ -29,6 +29,7 @@ class App extends Component {
     this.onClickAdd = this.onClickAdd.bind(this);
     this.onClickRemove = this.onClickRemove.bind(this);
     this.updateState = this.updateState.bind(this);
+    this.onSaveClick = this.onSaveClick.bind(this);
   }
 
   updateRouteText(event){
@@ -63,6 +64,34 @@ class App extends Component {
     }
   }
 
+  onSaveClick(event){
+      var request = {};
+      request["route"] = this.state.routeText;
+      var locations = [];
+
+      for(var i=0;i<this.state.places.length;i++){
+        var l = "'" + this.state.routes[i] + "'," + (i+1) + ",'" + this.state.places[i].formatted_address +
+                    "'," + this.state.places[i].geometry.location.lat() + "," + this.state.places[i].geometry.location.lng() +
+                    ",'" + this.state.places[i].place_id + "'";
+        locations.push(l);
+      }
+      request['records'] = locations;
+
+      $.ajax({
+          url: "http://localhost:8080/api/interim/submit",
+          dataType: "json",
+          type: "POST",
+          data: request,
+
+          success: function(data){
+            console.log("added!");
+          },
+          error:function(data){
+            console.log("failed!");
+          }
+      });
+  }
+
   updateState(data){
     this.setState(data);
   }
@@ -74,7 +103,7 @@ class App extends Component {
       this.state.routes.push(0);
       locations.push(i+1);
     }
-    var places = [{'lat':7.8124379,'lng':80.2248202}];
+
     return (
       <div>
         <div className="application">
@@ -130,6 +159,11 @@ class App extends Component {
                             </div>
                           );
                       })}
+
+                      <div className="small-12 large-4 columns end">
+                        <input type="button" className="button" value="Save" onClick={this.onSaveClick} />
+                      </div>
+
                   </div>
 
                   <div className="large-4 columns">
@@ -220,16 +254,12 @@ class InputGroupLocation extends Component{
       });
 
       var places = this.props.state.places;
-      // if(places.length >= this.props.id){
-      //   places[this.props.id-1] = autocomplete.getPlace().geometry.location;
-      // }else{
-      places.push(autocomplete.getPlace().geometry.location);
+
+      places.push(autocomplete.getPlace());
       this.props.updateParentState({
         places: places
       });
 
-      // }
-      console.log(this.props.state.places);
     }.bind(this));
   }
 
@@ -283,12 +313,12 @@ class GoogleMap extends Component{
       for(var i=0;i<this.state.markers.length;i++){
         this.state.markers[i].setMap(null);
       }
-      for(var i=0;i<this.props.places.length;i++){
+      for(i=0;i<this.props.places.length;i++){
         var marker = new window.google.maps.Marker({
             map: this.state.map,
             anchorPoint: new window.google.maps.Point(0, -29)
           });
-        marker.setPosition(this.props.places[i]);
+        marker.setPosition(this.props.places[i].geometry.location);
         marker.setVisible(true);
         this.state.markers.push(marker);
       }
