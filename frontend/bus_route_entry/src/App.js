@@ -70,7 +70,10 @@ class App extends Component {
       var locations = [];
 
       for(var i=0;i<this.state.places.length;i++){
-        var l = "'" + this.state.routes[i] + "'," + (i+1) + ",'" + this.state.places[i].formatted_address +
+        // var l = "'" + this.state.routes[i] + "'," + (i+1) + ",'" + this.state.places[i].formatted_address +
+        //             "'," + this.state.places[i].geometry.location.lat() + "," + this.state.places[i].geometry.location.lng() +
+        //             ",'" + this.state.places[i].place_id + "'";
+        var l = "'" + this.state.routes[i] + "'," + (i+1) + ",'" + this.state.places[i].vicinity +
                     "'," + this.state.places[i].geometry.location.lat() + "," + this.state.places[i].geometry.location.lng() +
                     ",'" + this.state.places[i].place_id + "'";
         locations.push(l);
@@ -78,14 +81,16 @@ class App extends Component {
       request['records'] = locations;
 
       $.ajax({
-          url: "http://localhost:8080/api/interim/submit",
+          //url: "http://localhost:8080/api/interim/submit",
+          url: "https://transitlanka-158812.appspot.com/api/interim/submit",
           dataType: "json",
           type: "POST",
-          data: request,
+          data: JSON.stringify(request),
 
           success: function(data){
             console.log("added!");
-          },
+            //this.setState(this.getInitialState());
+          }.bind(this),
           error:function(data){
             console.log("failed!");
           }
@@ -250,7 +255,7 @@ class InputGroupLocation extends Component{
     autocomplete.addListener('place_changed', function() {
       //console.log(autocomplete.getPlace());
       this.setState({
-        searchTxt: autocomplete.getPlace().formatted_address
+        searchTxt: autocomplete.getPlace().vicinity
       });
 
       var places = this.props.state.places;
@@ -259,6 +264,8 @@ class InputGroupLocation extends Component{
       this.props.updateParentState({
         places: places
       });
+
+      console.log(autocomplete.getPlace());
 
     }.bind(this));
   }
