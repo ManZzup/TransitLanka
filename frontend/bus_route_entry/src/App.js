@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import '../../libs/foundation/foundation.min.css';
-require('../../libs/foundation/jquery.js');
 import $ from '../../libs/foundation/jquery.js';
-// import '../../libs/foundation/foundation.min.js';
-import Helmet from "react-helmet";
-//import Autocomplete from 'react-google-autocomplete';
 
 
 
@@ -111,15 +106,6 @@ class App extends Component {
 
     return (
       <div>
-        <div className="application">
-            <Helmet title="Transit Lank"
-
-            />
-        </div>
-
-        <NavigationBar title="TransitLanka">
-            <NavigationBarItem class="active" text="Bus route data entry" />
-        </NavigationBar>
 
         <div className="container row">
 
@@ -188,28 +174,6 @@ class App extends Component {
   }
 }
 
-class NavigationBar extends Component{
-  render(){
-    return(
-      <div className="top-bar">
-        <div className="top-bar-left">
-          <ul className="menu">
-            <li className="menu-text">{this.props.title}</li>
-            {this.props.children}
-          </ul>
-        </div>
-      </div>
-    );
-  }
-}
-
-class NavigationBarItem extends Component{
-  render() {
-    return (
-      <li className={this.props.class}><a href="#">{this.props.text}</a></li>
-    );
-  }
-}
 
 class InputGroup extends Component{
   constructor(props){

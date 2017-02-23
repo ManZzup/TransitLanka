@@ -15,8 +15,11 @@ InterimSubmit Schema
 '''
 class InterimSubmitHandler(webapp2.RequestHandler):
     def post(self):
+        self.response.headers.add_header("Access-Control-Allow-Origin", "*")
+
         try:
             data = json.loads(self.request.body)
+            print data
         except:
             self.response.write(JSONDecodeException().getResponse())
             return
@@ -35,6 +38,12 @@ class InterimSubmitHandler(webapp2.RequestHandler):
                     record_data = r
             )
             interim_record.put()
+
+        self.response.write(json.dumps({"msg":"Added sucessfully!"}))
+
+class GetInterimRoutesHander(webapp2.RequestHandler):
+    def get(self):
+        pass
 
 
 app = webapp2.WSGIApplication([
