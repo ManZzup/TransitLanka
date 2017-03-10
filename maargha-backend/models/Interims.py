@@ -1,8 +1,8 @@
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 
-class InterimRoute(db.Model):
-    name = db.StringProperty(required=True)
+class InterimRoute(ndb.Model):
+    name = ndb.StringProperty(required=True)
 
-class InterimRecord(db.Model):
-    route = db.ReferenceProperty(InterimRoute, collection_name="records")
-    record_data = db.StringProperty(required=True)
+class InterimRecord(ndb.Model):
+    routeKey = ndb.KeyProperty(kind=InterimRoute)
+    recordData = ndb.StringProperty(required=True)

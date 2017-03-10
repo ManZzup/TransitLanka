@@ -8,6 +8,7 @@ import Helmet from "react-helmet";
 //import Autocomplete from 'react-google-autocomplete';
 import {Link} from 'react-router'
 
+window.API_BASE = "http://10.8.108.4:8080/api/";
 
 class MainLayout extends Component{
   render(){

@@ -76,8 +76,8 @@ class App extends Component {
       request['records'] = locations;
 
       $.ajax({
-          //url: "http://localhost:8080/api/interim/submit",
-          url: "https://transitlanka-158812.appspot.com/api/interim/submit",
+          url: window.API_BASE + "interim/submit",
+          // url: "https://transitlanka-158812.appspot.com/api/interim/submit",
           dataType: "json",
           type: "POST",
           data: JSON.stringify(request),

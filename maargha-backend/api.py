@@ -2,6 +2,7 @@ import webapp2
 import json
 from models.Interims import InterimRoute,InterimRecord
 from backend_exceptions.APIException import *
+from schema import schema
 
 '''
 InterimSubmit Schema
@@ -34,18 +35,33 @@ class InterimSubmitHandler(webapp2.RequestHandler):
 
         for r in records:
             interim_record = InterimRecord(
-                    route = interim_route,
-                    record_data = r
+                    routeKey = interim_route.key,
+                    recordData = r
             )
             interim_record.put()
 
         self.response.write(json.dumps({"msg":"Added sucessfully!"}))
 
-class GetInterimRoutesHander(webapp2.RequestHandler):
+class TestSchemaHandler(webapp2.RequestHandler):
     def get(self):
-        pass
+        query = self.request.get("query")
+        self.response.write(json.dumps(schema.execute(query).data))
 
+    def post(self):
+        query = self.request.body
+        self.response.write(json.dumps(schema.execute(query).data))
+        print schema.execute(query).errors
+
+class GraphQLEndpointHandler(webapp2.RequestHandler):
+    def post(self):
+        query = self.request.body
+
+        self.response.headers.add_header("Access-Control-Allow-Origin", "*")
+        self.response.write(json.dumps(schema.execute(query).data))
+        print schema.execute(query).errors
 
 app = webapp2.WSGIApplication([
     ('/api/interim/submit', InterimSubmitHandler),
+    ('/api/test', TestSchemaHandler),
+    ('/api/query', GraphQLEndpointHandler),
 ], debug=True)
