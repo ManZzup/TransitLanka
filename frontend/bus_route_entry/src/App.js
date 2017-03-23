@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import $ from '../../libs/foundation/jquery.js';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Actions from './actions';
+import RecordEntry from './components/RecordEntry';
 
 
 //import "./places_api.js";
@@ -12,33 +15,21 @@ class App extends Component {
 
     this.state = {
       disabled : "true",
-      routeTextDisabled : "",
-      routeText: "",
       locationsCount: 1,
       routes: [],
       places: []
     };
 
     this.onRouteNoSet = this.onRouteNoSet.bind(this);
-    this.updateRouteText = this.updateRouteText.bind(this);
     this.onClickAdd = this.onClickAdd.bind(this);
     this.onClickRemove = this.onClickRemove.bind(this);
     this.updateState = this.updateState.bind(this);
     this.onSaveClick = this.onSaveClick.bind(this);
   }
 
-  updateRouteText(event){
-    this.setState({
-      routeText: event.target.value
-    })
-  }
   onRouteNoSet(event){
-    if(this.state.routeText !== ""){
-      this.setState({
-        disabled: "",
-        routeTextDisabled: "true"
-      });
-    }
+    this.props.actions.disableRouteText();
+    this.props.actions.enableRecordEntries();
   }
 
   onClickAdd(event){
@@ -103,7 +94,6 @@ class App extends Component {
       this.state.routes.push(0);
       locations.push(i+1);
     }
-
     return (
       <div>
 
@@ -113,8 +103,10 @@ class App extends Component {
 
                   <div className="input-group small-12 large-12 columns">
                     <span className="input-group-label">Route No</span>
-                    <input className="input-group-field" type="text" disabled={this.state.routeTextDisabled}
-                              value={this.state.routeText} onChange={this.updateRouteText} />
+                    <input className="input-group-field" type="text"
+                              disabled={this.props.routeTextDisabled}
+                              value={this.props.routeName}
+                              onChange={ (e) => this.props.actions.setRouteName(e.target.value)} />
                     <div className="input-group-button">
                       <input type="button" className="button" value="Set" onClick={this.onRouteNoSet} />
                     </div>
@@ -124,8 +116,13 @@ class App extends Component {
                       {locations.map((d) => {
                           return(
                             <div key={d} className="row">
-                              <InputGroup label="Road No." disabled={this.state.disabled} state={this.state} id={d} />
-                              <InputGroupLocation label="Location" disabled={this.state.disabled} id={d}
+                              <RecordEntry label="Road No."
+                                           disabled={this.props.recordEntriesDisabled}
+                                            id={d}
+                                           addRoute={this.props.actions.addRoute}
+                                             />
+                              <InputGroup label="Road No." disabled={this.props.recordEntriesDisabled} state={this.state} id={d} />
+                              <InputGroupLocation label="Location" disabled={this.props.recordEntriesDisabled} id={d}
                                                   state={this.state} updateParentState={this.updateState} />
 
                             {d === locations.length ? (
@@ -172,6 +169,19 @@ class App extends Component {
       </div>
     );
   }
+}
+
+function mapStateToProps(state) {
+   return {
+     routeName: state.routeName,
+     routeTextDisabled: state.routeTextDisabled,
+     recordEntriesDisabled : state.recordEntriesDisabled
+   };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch)
+  };
 }
 
 
@@ -301,4 +311,5 @@ class GoogleMap extends Component{
   }
 }
 
-export default App;
+// export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

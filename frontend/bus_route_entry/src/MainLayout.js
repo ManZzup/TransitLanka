@@ -7,6 +7,8 @@ import $ from '../../libs/foundation/jquery.js';
 import Helmet from "react-helmet";
 //import Autocomplete from 'react-google-autocomplete';
 import {Link} from 'react-router'
+import NavigationBar from './components/NavigationBar';
+import NavigationBarItem from './components/NavigationBarItem';
 
 window.API_BASE = "http://10.8.108.4:8080/api/";
 
@@ -26,30 +28,6 @@ class MainLayout extends Component{
         {this.props.children}
 
       </div>
-    );
-  }
-}
-
-
-class NavigationBar extends Component{
-  render(){
-    return(
-      <div className="top-bar">
-        <div className="top-bar-left">
-          <ul className="menu">
-            <li className="menu-text">{this.props.title}</li>
-            {this.props.children}
-          </ul>
-        </div>
-      </div>
-    );
-  }
-}
-
-class NavigationBarItem extends Component{
-  render() {
-    return (
-      <li className={this.props.class}><Link to={this.props.link}>{this.props.text}</Link></li>
     );
   }
 }
