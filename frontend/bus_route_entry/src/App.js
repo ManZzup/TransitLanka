@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from './actions';
 import RecordEntry from './components/RecordEntry';
+import PlacesAutomcompleteContainer from './containers/PlacesAutocompleteContainer';
+import GoogleMapContainer from './containers/GoogleMapContainer';
 
 
 //import "./places_api.js";
@@ -15,9 +17,7 @@ class App extends Component {
 
     this.state = {
       disabled : "true",
-      locationsCount: 1,
-      routes: [],
-      places: []
+      locationsCount: 1
     };
 
     this.onRouteNoSet = this.onRouteNoSet.bind(this);
@@ -41,27 +41,18 @@ class App extends Component {
     this.setState({
       locationsCount: this.state.locationsCount - 1
     });
-    var places = this.state.places;
-    if(places.length === this.state.locationsCount){
-      places.pop();
-      this.setState({
-        places: places
-      });
-    }
+    this.props.actions.removeRecordEntry();
   }
 
   onSaveClick(event){
       var request = {};
-      request["route"] = this.state.routeText;
+      request["route"] = this.props.routeName;
       var locations = [];
 
       for(var i=0;i<this.state.places.length;i++){
-        // var l = "'" + this.state.routes[i] + "'," + (i+1) + ",'" + this.state.places[i].formatted_address +
-        //             "'," + this.state.places[i].geometry.location.lat() + "," + this.state.places[i].geometry.location.lng() +
-        //             ",'" + this.state.places[i].place_id + "'";
-        var l = "'" + this.state.routes[i] + "'," + (i+1) + ",'" + this.state.places[i].vicinity +
-                    "'," + this.state.places[i].geometry.location.lat() + "," + this.state.places[i].geometry.location.lng() +
-                    ",'" + this.state.places[i].place_id + "'";
+        var l = "'" + this.props.roadRoutes[i] + "'," + (i+1) + ",'" + this.props.roadPlaces[i].vicinity +
+                    "'," + this.props.roadPlaces[i].geometry.location.lat() + "," + this.props.roadPlaces[i].geometry.location.lng() +
+                    ",'" + this.props.roadPlaces[i].place_id + "'";
         locations.push(l);
       }
       request['records'] = locations;
@@ -91,7 +82,7 @@ class App extends Component {
   render() {
     var locations = [];
     for(var i=0;i<this.state.locationsCount;i++){
-      this.state.routes.push(0);
+      this.props.roadRoutes.push(0);
       locations.push(i+1);
     }
     return (
@@ -118,12 +109,16 @@ class App extends Component {
                             <div key={d} className="row">
                               <RecordEntry label="Road No."
                                            disabled={this.props.recordEntriesDisabled}
-                                            id={d}
+                                           id={d}
                                            addRoute={this.props.actions.addRoute}
                                              />
-                              <InputGroup label="Road No." disabled={this.props.recordEntriesDisabled} state={this.state} id={d} />
-                              <InputGroupLocation label="Location" disabled={this.props.recordEntriesDisabled} id={d}
-                                                  state={this.state} updateParentState={this.updateState} />
+                              <PlacesAutomcompleteContainer
+                                          label="Location"
+                                          disabled={this.props.recordEntriesDisabled}
+                                          id={d}
+                                          state={this.state}
+                                          updateParentState={this.updateState}
+                               />
 
                             {d === locations.length ? (
                               <div>
@@ -155,7 +150,7 @@ class App extends Component {
                   </div>
 
                   <div className="large-4 columns">
-                      <GoogleMap places={this.state.places} />
+                      <GoogleMapContainer />
                   </div>
 
 
@@ -175,140 +170,15 @@ function mapStateToProps(state) {
    return {
      routeName: state.routeName,
      routeTextDisabled: state.routeTextDisabled,
-     recordEntriesDisabled : state.recordEntriesDisabled
+     recordEntriesDisabled : state.recordEntriesDisabled,
+     roadRoutes : state.roadRoutes,
+     roadPlaces : state.roadPlaces
    };
 }
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(Actions, dispatch)
   };
-}
-
-
-class InputGroup extends Component{
-  constructor(props){
-    super(props);
-
-    this.onChangeRoute = this.onChangeRoute.bind(this)
-  }
-
-  onChangeRoute(event){
-      this.props.state.routes[this.props.id - 1] = event.target.value;
-  }
-
-  render(){
-    return(
-      <div className="small-12 large-5 columns">
-        <div className="input-group">
-          <span className="input-group-label">{this.props.label}</span>
-          <input className="input-group-field" type="text" disabled={this.props.disabled} onChange={this.onChangeRoute} />
-        </div>
-      </div>
-    );
-  }
-}
-
-class InputGroupLocation extends Component{
-  constructor(props){
-    super(props);
-
-    this.state = {
-      place: "",
-      searchTxt: ""
-    };
-
-    this.onSearchInputChange = this.onSearchInputChange.bind(this)
-
-  }
-  componentDidMount(){
-    var input = document.getElementById('auto_input_' + this.props.id);
-    var options = {
-      componentRestrictions: {country: "lk"}
-    };
-    var autocomplete = new window.google.maps.places.Autocomplete(input,options);
-    autocomplete.addListener('place_changed', function() {
-      //console.log(autocomplete.getPlace());
-      this.setState({
-        searchTxt: autocomplete.getPlace().vicinity
-      });
-
-      var places = this.props.state.places;
-
-      places.push(autocomplete.getPlace());
-      this.props.updateParentState({
-        places: places
-      });
-
-      console.log(autocomplete.getPlace());
-
-    }.bind(this));
-  }
-
-  onSearchInputChange(event){
-    var route = this.props.state.routes[this.props.id - 1];
-    var txt = event.target.value;
-    txt = txt.replace(route+",","");
-    txt = route+"," + txt;
-    this.setState({
-      searchTxt: txt
-    });
-    window.google.maps.event.trigger( document.getElementById('auto_input_' + this.props.id), 'focus', {} );
-  }
-
-  render(){
-    var auto_input_id = 'auto_input_' + this.props.id;
-    return(
-      <div className="small-12 large-5 columns">
-        <div className="input-group">
-          <span className="input-group-label">{this.props.label}</span>
-          <input className="input-group-field" id={auto_input_id} type="text" disabled={this.props.disabled}
-                  onChange={this.onSearchInputChange} value={this.state.searchTxt} />
-        </div>
-      </div>
-    );
-  }
-}
-
-class GoogleMap extends Component{
-  constructor(props){
-    super(props);
-
-    this.state = {
-      map: "",
-      markers : []
-    };
-  }
-  componentDidMount(){
-    var map = new window.google.maps.Map(document.getElementById('map'), {
-          center: {lat: 7.8124379, lng: 80.2248202},
-          zoom: 8
-        });
-    this.setState({
-      map : map
-    });
-
-  }
-  render(){
-    //console.log("rerender");
-    if(this.state.map !== ""){
-      for(var i=0;i<this.state.markers.length;i++){
-        this.state.markers[i].setMap(null);
-      }
-      for(i=0;i<this.props.places.length;i++){
-        var marker = new window.google.maps.Marker({
-            map: this.state.map,
-            anchorPoint: new window.google.maps.Point(0, -29)
-          });
-        marker.setPosition(this.props.places[i].geometry.location);
-        marker.setVisible(true);
-        this.state.markers.push(marker);
-      }
-    }
-    return(
-      <div id="map" style={{height: '400px'}}>
-      </div>
-    );
-  }
 }
 
 // export default App;
