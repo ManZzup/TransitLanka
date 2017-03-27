@@ -28,6 +28,7 @@ for line in route_map:
 #print locs
 #print roads
 
+#find all routes that has the current node or adjescent to the current node
 def findRoutes(routes,node):
     sel = list()
     for r in routes:

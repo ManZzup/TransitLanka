@@ -23,12 +23,13 @@ class PlacesAutocompleteContainer extends Component{
     };
     var autocomplete = new window.google.maps.places.Autocomplete(input,options);
     autocomplete.addListener('place_changed', function(e) {
-      console.log(autocomplete.getPlace());
       this.setState({
-        searchTxt: autocomplete.getPlace().vicinity
+        searchTxt: input.value
       });
+      var place = autocomplete.getPlace();
+      place.full_name = input.value;
 
-      this.props.actions.addPlace(this.props.id,autocomplete.getPlace());
+      this.props.actions.addPlace(this.props.id,place);
     }.bind(this));
   }
 

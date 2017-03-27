@@ -31,10 +31,17 @@ class App extends Component {
       var locations = [];
 
       for(var i=0;i<this.props.roadPlaces.length;i++){
-        var l = "'" + this.props.roadRoutes[i] + "'," + (i+1) + ",'" + this.props.roadPlaces[i].vicinity +
-                    "'," + this.props.roadPlaces[i].geometry.location.lat() + "," + this.props.roadPlaces[i].geometry.location.lng() +
-                    ",'" + this.props.roadPlaces[i].place_id + "'";
-        locations.push(l);
+        var r = [];
+        r.push(this.props.roadRoutes[i]);
+        r.push((i+1));
+        r.push(this.props.roadPlaces[i].full_name);
+        r.push(this.props.roadPlaces[i].geometry.location.lat());
+        r.push(this.props.roadPlaces[i].geometry.location.lng());
+        r.push(this.props.roadPlaces[i].place_id);
+        // var l = "'" + this.props.roadRoutes[i] + "'," + (i+1) + ",'" + this.props.roadPlaces[i].vicinity +
+        //             "'," + this.props.roadPlaces[i].geometry.location.lat() + "," + this.props.roadPlaces[i].geometry.location.lng() +
+        //             ",'" + this.props.roadPlaces[i].place_id + "'";
+        locations.push(r);
       }
       request['records'] = locations;
 

@@ -28,6 +28,10 @@ class InterimSubmitHandler(webapp2.RequestHandler):
         route = data['route']
         records = data['records']
 
+        if len(records) < 1:
+            self.response.write(InvalidInputDataException().getResponse())
+            return
+
         interim_route = InterimRoute(
                         name = route
         )
@@ -36,11 +40,16 @@ class InterimSubmitHandler(webapp2.RequestHandler):
         for r in records:
             interim_record = InterimRecord(
                     routeKey = interim_route.key,
-                    recordData = r
+                    recordData = json.dumps(r)
             )
             interim_record.put()
 
-        self.response.write(json.dumps({"msg":"Added sucessfully!"}))
+        self.response.write(json.dumps({"msg":"Added sucessfully!", "code":200}))
+
+        #TEST
+        print('########')
+        print(self.request.body)
+        print('#######')
 
 class TestSchemaHandler(webapp2.RequestHandler):
     def get(self):

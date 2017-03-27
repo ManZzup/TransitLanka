@@ -12,3 +12,7 @@ class APIException():
 class JSONDecodeException(APIException):
     def __init__(self):
         APIException.__init__(self,10001,"Error in decoding JSON data")
+
+class InvalidInputDataException(APIException):
+    def __init__(self):
+        APIException.__init__(self,10002,"Invalid input given")

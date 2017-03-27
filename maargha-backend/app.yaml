@@ -7,3 +7,6 @@ handlers:
   script: api.app
 - url: .*
   script: main.app
+- url: /test_data
+  static_dir: test/test_data
+  application_readable: true

@@ -1,7 +1,7 @@
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 
-class Location(db.Model):
-    formatted_address = db.StringProperty(required=True)
-    lat = db.FloatProperty(required=True)
-    lng = db.FloatProperty(required=True)
-    gmap_place_id = db.StringProperty(required=True)
+class Location(ndb.Model):
+    node = ndb.StringProperty(required=True)
+    lat = ndb.FloatProperty(required=True)
+    lng = ndb.FloatProperty(required=True)
+    placeId = ndb.StringProperty(required=True)
