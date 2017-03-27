@@ -22,7 +22,8 @@ class PlacesAutocompleteContainer extends Component{
       componentRestrictions: {country: "lk"}
     };
     var autocomplete = new window.google.maps.places.Autocomplete(input,options);
-    autocomplete.addListener('place_changed', function() {
+    autocomplete.addListener('place_changed', function(e) {
+      console.log(autocomplete.getPlace());
       this.setState({
         searchTxt: autocomplete.getPlace().vicinity
       });
@@ -58,7 +59,7 @@ class PlacesAutocompleteContainer extends Component{
 
 function mapStateToProps(state) {
    return {
-     roadRoutes : state.roadRoutes
+     roadRoutes : state.routeEntry.roadRoutes
    };
 }
 function mapDispatchToProps(dispatch) {

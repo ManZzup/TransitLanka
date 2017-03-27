@@ -1,10 +1,13 @@
 import {SET_ROUTE_NAME,DISABLE_ROUTE_TXT,ENABLE_RECORD_ENTRIES,ADD_ROUTE,ADD_PLACE,
-        REMOVE_RECORD_ENTRY, RESET_STATE} from '../actions';
+        ADD_RECORD_ENTRY,REMOVE_RECORD_ENTRY, RESET_STATE} from '../actions';
+
+// import {SUBMIT_RECORD,SUBMIT_RECORD_SUCCESS,SUBMIT_RECORD_FAIL} from '../actions/API';
 
 const initialState = {
   routeName : "",
   routeTextDisabled : null,
   recordEntriesDisabled : "true",
+  roadSlots : 1,
   roadRoutes : [],
   roadPlaces : []
 };
@@ -34,7 +37,7 @@ export function routeEntry(state = initialState,action){
         ...state, roadRoutes : newarray
       };
     case ADD_PLACE:
-      let newarray = (action.id-1 === state.roadPlaces.length) ? insertItem(state.roadPlaces,action.id-1,action.place)
+      newarray = (action.id-1 === state.roadPlaces.length) ? insertItem(state.roadPlaces,action.id-1,action.place)
                                                      : updateObjectInArray(state.roadPlaces, action.id-1, action.place);
       return{
         ...state, roadPlaces : newarray
@@ -44,7 +47,11 @@ export function routeEntry(state = initialState,action){
       var newarray2 = removeItem(state.roadPlaces,state.roadPlaces.length-1);
 
       return{
-        ...state, roadRoutes : newarray1, roadPlaces : newarray2
+        ...state, roadRoutes : newarray1, roadPlaces : newarray2, roadSlots : state.roadSlots-1
+      };
+    case ADD_RECORD_ENTRY:
+      return{
+        ...state, roadSlots : state.roadSlots+1
       };
     case RESET_STATE:
       return initialState;

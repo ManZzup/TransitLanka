@@ -44,7 +44,7 @@ class GoogleMapContainer extends Component{
 
 function mapStateToProps(state) {
    return {
-     roadPlaces : state.roadPlaces
+     roadPlaces : state.routeEntry.roadPlaces
    };
 }
 

@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import RouteEntryReducer from './routeEntry';
+import routeEntry from './routeEntry';
+import layout from './layout';
 
 const rootReducer = combineReducers({
-  routeEntry : RouteEntryReducer
+  layout,routeEntry
 });
 
 export default rootReducer;

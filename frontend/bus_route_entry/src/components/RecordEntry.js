@@ -6,7 +6,8 @@ const RecordEntry = (props) => (
       <span className="input-group-label">{props.label}</span>
       <input className="input-group-field" type="text"
              disabled={props.disabled}
-             onChange={(e) => props.addRoute(props.id,e.target.value)} />
+             onChange={(e) => props.addRoute(props.id,e.target.value)}
+             value={props.value} />
     </div>
   </div>
 );

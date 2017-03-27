@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 import { Router, Route, browserHistory } from 'react-router'
-import MainLayout from './MainLayout';
+import MainLayoutContainer from './pages/MainLayoutContainer';
 import VerifyData from './VerifyData';
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore,applyMiddleware } from 'redux'
 import rootReducer from './reducers'
-import routeEntry from './reducers/routeEntry'
+import thunkMiddleware from 'redux-thunk'
 
 
 // ReactDOM.render(
@@ -16,13 +16,17 @@ import routeEntry from './reducers/routeEntry'
 //   document.getElementById('root')
 // );
 //make this root reducer after implementing
-let store = createStore(routeEntry);
+let store = createStore(rootReducer,applyMiddleware(
+    thunkMiddleware
+  ));
+
+  // console.log(store.getState());
 
 ReactDOM.render(
 <Provider store={store}>
   <Router history={browserHistory}>
 
-      <Route component={MainLayout}>
+      <Route component={MainLayoutContainer}>
         <Route path="/" component={App} />
         <Route path="/verify" component={VerifyData} />
       </Route>

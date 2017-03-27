@@ -3,8 +3,11 @@ export const DISABLE_ROUTE_TXT =  "DISABLE_ROUTE_TXT";
 export const ENABLE_RECORD_ENTRIES = "ENABLE_RECORD_ENTRIES";
 export const ADD_ROUTE = "ADD_ROUTE";
 export const ADD_PLACE = "ADD_PLACE";
+export const ADD_RECORD_ENTRY = "ADD_RECORD_ENTRY";
 export const REMOVE_RECORD_ENTRY = "REMOVE_RECORD_ENTRY";
 export const RESET_STATE = "RESET_STATE";
+
+export const SET_POPUP = "SET_POPUP";
 
 export function setRouteName(name){
   return {
@@ -41,6 +44,11 @@ export function addPlace(id,place){
   };
 }
 
+export function addRecordEntry(){
+  return {
+    type: ADD_RECORD_ENTRY
+  };
+}
 export function removeRecordEntry(){
   return {
     type: REMOVE_RECORD_ENTRY
@@ -50,5 +58,13 @@ export function removeRecordEntry(){
 export function resetState(){
   return{
     type: RESET_STATE
+  };
+}
+
+export function setPopup(pType,msg){
+  return{
+    type: SET_POPUP,
+    pType: pType,
+    msg: msg
   };
 }

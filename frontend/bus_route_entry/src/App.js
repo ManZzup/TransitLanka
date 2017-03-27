@@ -4,6 +4,7 @@ import $ from '../../libs/foundation/jquery.js';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as Actions from './actions';
+import * as ApiActions from './actions/API';
 import RecordEntry from './components/RecordEntry';
 import PlacesAutomcompleteContainer from './containers/PlacesAutocompleteContainer';
 import GoogleMapContainer from './containers/GoogleMapContainer';
@@ -15,15 +16,7 @@ class App extends Component {
   constructor(props){
     super(props);
 
-    this.state = {
-      disabled : "true",
-      locationsCount: 1
-    };
-
     this.onRouteNoSet = this.onRouteNoSet.bind(this);
-    this.onClickAdd = this.onClickAdd.bind(this);
-    this.onClickRemove = this.onClickRemove.bind(this);
-    this.updateState = this.updateState.bind(this);
     this.onSaveClick = this.onSaveClick.bind(this);
   }
 
@@ -32,24 +25,12 @@ class App extends Component {
     this.props.actions.enableRecordEntries();
   }
 
-  onClickAdd(event){
-    this.setState({
-      locationsCount: this.state.locationsCount + 1
-    });
-  }
-  onClickRemove(event){
-    this.setState({
-      locationsCount: this.state.locationsCount - 1
-    });
-    this.props.actions.removeRecordEntry();
-  }
-
   onSaveClick(event){
       var request = {};
       request["route"] = this.props.routeName;
       var locations = [];
 
-      for(var i=0;i<this.state.places.length;i++){
+      for(var i=0;i<this.props.roadPlaces.length;i++){
         var l = "'" + this.props.roadRoutes[i] + "'," + (i+1) + ",'" + this.props.roadPlaces[i].vicinity +
                     "'," + this.props.roadPlaces[i].geometry.location.lat() + "," + this.props.roadPlaces[i].geometry.location.lng() +
                     ",'" + this.props.roadPlaces[i].place_id + "'";
@@ -57,32 +38,13 @@ class App extends Component {
       }
       request['records'] = locations;
 
-      $.ajax({
-          url: window.API_BASE + "interim/submit",
-          // url: "https://transitlanka-158812.appspot.com/api/interim/submit",
-          dataType: "json",
-          type: "POST",
-          data: JSON.stringify(request),
-
-          success: function(data){
-            console.log("added!");
-            //this.setState(this.getInitialState());
-          }.bind(this),
-          error:function(data){
-            console.log("failed!");
-          }
-      });
+      this.props.api.apiSubmitRecord(JSON.stringify(request));
   }
-
-  updateState(data){
-    this.setState(data);
-  }
-
 
   render() {
     var locations = [];
-    for(var i=0;i<this.state.locationsCount;i++){
-      this.props.roadRoutes.push(0);
+    for(var i=0;i<this.props.roadSlots;i++){
+      //this.props.roadRoutes.push(0);
       locations.push(i+1);
     }
     return (
@@ -124,11 +86,11 @@ class App extends Component {
                               <div>
                                 {d > 1 ? (
                                   <div className="small-12 large-1 columns">
-                                    <input type="button" className="button" value="- " onClick={this.onClickRemove} />
+                                    <input type="button" className="button" value="- " onClick={this.props.actions.removeRecordEntry} />
                                   </div>
                                 ) : ( <div></div> )}
                                 <div className="small-12 large-1 columns end">
-                                  <input type="button" className="button" value="+" onClick={this.onClickAdd} />
+                                  <input type="button" className="button" value="+" onClick={this.props.actions.addRecordEntry} />
                                 </div>
                               </div>
                             ) : d === (locations.length-1) ? (
@@ -168,16 +130,18 @@ class App extends Component {
 
 function mapStateToProps(state) {
    return {
-     routeName: state.routeName,
-     routeTextDisabled: state.routeTextDisabled,
-     recordEntriesDisabled : state.recordEntriesDisabled,
-     roadRoutes : state.roadRoutes,
-     roadPlaces : state.roadPlaces
+     routeName: state.routeEntry.routeName,
+     routeTextDisabled: state.routeEntry.routeTextDisabled,
+     recordEntriesDisabled : state.routeEntry.recordEntriesDisabled,
+     roadRoutes : state.routeEntry.roadRoutes,
+     roadPlaces : state.routeEntry.roadPlaces,
+     roadSlots : state.routeEntry.roadSlots
    };
 }
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Actions, dispatch)
+    actions: bindActionCreators(Actions, dispatch),
+    api: bindActionCreators(ApiActions, dispatch)
   };
 }
 
