@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter, Route } from 'react-router-dom'
+// import { HashRouter, Route, BrowserRouter } from 'react-router-dom'
+import { Router, Route, browserHistory, hashHistory } from 'react-router'
 import { Provider } from 'react-redux'
 import { createStore,applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
@@ -8,6 +9,7 @@ import thunkMiddleware from 'redux-thunk'
 import LayoutContainer from './pages/LayoutContainer'
 import rootReducer from './reducers'
 import SearchPageContainer from './pages/SearchPage/SearchPageContainer';
+import SearchResultPageComponent from './pages/SearchResultPage/component/';
 
 let store = createStore(rootReducer,applyMiddleware(
     thunkMiddleware
@@ -15,14 +17,16 @@ let store = createStore(rootReducer,applyMiddleware(
 
 
 ReactDOM.render(
+
 <Provider store={store}>
-  <HashRouter>
+  <Router history={browserHistory}>
 
-      <LayoutContainer>
+      <Route component={LayoutContainer}>
         <Route path="/" component={SearchPageContainer} />
-      </LayoutContainer>
+        <Route path="/result" component={SearchResultPageComponent} />
+      </Route>
 
-  </HashRouter>
+  </Router>
 </Provider>,
   document.getElementById('root')
 );

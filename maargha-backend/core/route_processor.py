@@ -12,6 +12,7 @@ from models.Location import Location
 from models.Route import Route
 from models.Road import Road
 from models.RouteLocation import RouteLocation
+from models.Query import RouteQueryResponse
 
 '''Constants'''
 NEIGHBOUR_RADIUS_LAT = 0.001
@@ -63,7 +64,7 @@ def find_routes(node):
 function that runs the path search
 algorithm will parallely check till the end node is reached
 '''
-def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes):
+def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,query_key):
     #check if the current node is in the vicinity of the end_node
     neightbours = find_neighbouring_nodes(node)
     neightbours.append(node)
@@ -74,11 +75,18 @@ def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes):
 
     for n in neightbours:
         if n.key == end_node.key:
-            print "FOUND ROUTE"
-            print "HOPS :",hops
-            print "TRANSFERS:",transfers-1
-            print "PATH:",[p.node for p in path]
-            print "ROUTES:",[pr.routeNumber for pr in path_routes]
+            # print "FOUND ROUTE"
+            # print "HOPS :",hops
+            # print "TRANSFERS:",transfers-1
+            # print "PATH:",[p.node for p in path]
+            # print "ROUTES:",[pr.routeNumber for pr in path_routes]
+            response = RouteQueryResponse(
+                routeQuery = query_key,
+                hops = hops,
+                routes = [pr.routeNumber for pr in path_routes],
+                nodes = [p.node for p in path]
+            )
+            response.put()
             return
 
         node_routes = find_routes(n)
@@ -98,7 +106,7 @@ def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes):
         path.append(en[0])
         path_routes.append(en[1])
 
-        path_search(en[0],end_node,explored_routes,en[2],transfers+1,path,path_routes)
+        path_search(en[0],end_node,explored_routes,en[2],transfers+1,path,path_routes,query_key)
 
         path.remove(en[0])
         path_routes.remove(en[1])

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, browserHistory, hashHistory } from 'react-router'
 import MainLayoutContainer from './pages/MainLayoutContainer';
 import VerifyData from './VerifyData';
 import { Provider } from 'react-redux'
@@ -24,7 +24,7 @@ let store = createStore(rootReducer,applyMiddleware(
 
 ReactDOM.render(
 <Provider store={store}>
-  <Router history={browserHistory}>
+  <Router history={hashHistory}>
 
       <Route component={MainLayoutContainer}>
         <Route path="/" component={App} />

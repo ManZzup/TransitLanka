@@ -5,8 +5,11 @@ threadsafe: yes
 handlers:
 - url: /api/.*
   script: api.app
+- url: /entry/
+  static_files: frontend/entry/index.html
+  upload: frontend/entry/index.html
+- url: /entry/(.*)
+  static_files: frontend/entry/\1
+  upload: frontend/entry/.*
 - url: .*
   script: main.app
-- url: /test_data
-  static_dir: test/test_data
-  application_readable: true
