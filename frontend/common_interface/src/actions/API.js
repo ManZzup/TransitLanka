@@ -27,11 +27,11 @@ export function searchLocationFail(){
 }
 
 export function apiSearchLocation(str){
-  if(str.length < 3){
-    return searchLocationFail();
-  }
   return (dispatch) => {
-    dispatch(searchLocation);
+    if(str.length < 3){
+      return dispatch(searchLocationFail());
+    }
+    dispatch(searchLocation());
 
     var query = `{
       Locations(search : "`+ str +`") {
@@ -51,7 +51,7 @@ export function apiSearchLocation(str){
       dispatch(searchLocationSuccess(json['Locations']));
     })
     .catch( (error) => {
-      dispatch(searchLocationFail);
+      dispatch(searchLocationFail());
     });
   };
 }
@@ -78,19 +78,19 @@ export function findPathSuccess(results){
 export function findPathFail(){
   console.log("TODO: failed to get path");
   return{
-    type: FIND_PATH_SUCCESS
+    type: FIND_PATH_FAIL
   }
 }
 
 export function apiFindPath(){
   return (dispatch,getState) => {
-    dispatch(findPath);
+    dispatch(findPath());
 
     var start_node = getState().search.start_location;
     var end_node = getState().search.end_location;
 
     if(start_node === "" || end_node === ""){
-      return findPathFail();
+      return dispatch(findPathFail());
     }
 
     var query = `{
@@ -111,7 +111,7 @@ export function apiFindPath(){
       dispatch(findPathSuccess(json['Query']));
     })
     .catch( (error) => {
-      dispatch(findPathFail);
+      dispatch(findPathFail());
     });
   };
 }

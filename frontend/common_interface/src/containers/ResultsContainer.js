@@ -18,7 +18,7 @@ class ResultsContainer extends Component{
       var title = "";
       var routes = this.props.results[i].routes;
       for(var j=0;j<routes.length;j++){
-        title += (j==0) ? routes[j] : " → " + routes[j];
+        title += (j===0) ? routes[j] : " → " + routes[j];
       }
       resultSet.push(title);
     }

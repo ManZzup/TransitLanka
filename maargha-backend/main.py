@@ -1,3 +1,9 @@
+'''
+@author: manujith
+
+Main application reqeusts handelr
+'''
+
 import webapp2
 from models import Location
 from test import core_test
@@ -6,16 +12,6 @@ class MainPage(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.write('Hello, World!')
-
-#testapi = endpoints.api_server([api.TestAPI])
-
-class TestHandler1(webapp2.RequestHandler):
-    def get(self):
-        core_test.load_test_data()
-
-class TestHandler2(webapp2.RequestHandler):
-    def get(self):
-        core_test.test_find_neightbour_nodes()
 
 class TestHandler(webapp2.RequestHandler):
     def get(self):
@@ -55,7 +51,5 @@ class TestHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
-    ('/test/1', TestHandler1),
-    ('/test/2', TestHandler2),
     ('/test', TestHandler),
 ], debug=True)

@@ -24,11 +24,13 @@ const SearchResultPageComponent = (props) => (
                 label="I am at"
                 id="txt_start"
                 placeholder="Select start location"
+                value={props.startText}
              />
              <PlacesAutocompleteContainer
                  label="I am going"
                  id="txt_end"
                  placeholder="Select end location"
+                 value={props.endText}
               />
 
           </div>

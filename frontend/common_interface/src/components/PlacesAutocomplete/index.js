@@ -8,7 +8,8 @@ return(
         <input className="input-group-field awesomplete" type="text"
                placeholder={props.placeholder}
                id={props.id}
-               onChange={(e) => props.onTextChange(e.target.value)}  />
+               onChange={(e) => props.onTextChange(e.target.value)}
+               defaultValue={props.value} />
       </div>
     </div>
 );

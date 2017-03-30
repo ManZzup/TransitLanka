@@ -31,6 +31,7 @@ class PlacesAutocompleteContainer extends Component{
             placeholder={this.props.placeholder}
             onTextChange={this.props.api.apiSearchLocation}
             locations={this.props.locations}
+            value={this.props.value}
         />
     );
   }

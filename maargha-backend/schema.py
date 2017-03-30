@@ -1,3 +1,9 @@
+'''
+@author: manujith
+
+Process the GraphQL - Graphene bindings 
+'''
+
 import graphene
 from graphene_gae import NdbObjectType, NdbConnectionField
 from models.Interims import InterimRoute,InterimRecord

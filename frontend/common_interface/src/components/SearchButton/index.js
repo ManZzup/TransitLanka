@@ -2,12 +2,12 @@ import React from 'react';
 
 const SearchButton = (props) => (
   <div className="row">
-    {!props.showLoadButton &&
+    {!props.loadButton &&
       <input type="button" className="button warning" value="Do MAGIC!" onClick={props.onSearch} />
     }
-    {props.showLoadButton &&
-      <span href="#" onClick="return false" className="button warning">
-        <img src="/assets/gear.gif" width="40px" />
+    {props.loadButton &&
+      <span href="#" onClick={() => {return false}} className="button warning">
+        <img src="/assets/gear.gif" width="40px" alt="" />
       </span>
     }
   </div>

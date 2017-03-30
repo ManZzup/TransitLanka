@@ -5,6 +5,8 @@ const initialState = {
   locations : [],
   start_location : "",
   end_location : "",
+  start_txt : "",
+  end_txt : "",
   results : [],
   showLoading : false
 };
@@ -26,55 +28,24 @@ export function search(state = initialState,action){
 
       if(action.txt_input === "txt_start"){
         return {
-          ...state, start_location : key
+          ...state, start_location : key, start_txt : action.location_name
         };
       }else{
         return {
-          ...state, end_location : key
+          ...state, end_location : key, end_txt : action.location_name
         };
       }
     case FIND_PATH_SUCCESS:
       return {
-        ...state, results : action.results
+        ...state, results : action.results, showLoading : false
       };
     case FIND_PATH:
-      console.log(action);
       return{
         ...state, showLoading : true
       };
     default:
       return state;
   }
-}
-
-function insertItem(array, id, item) {
-    let newArray = array.slice();
-    newArray.splice(id, 0, item);
-    return newArray;
-}
-function removeItem(array, id) {
-    let newArray = array.slice();
-    newArray.splice(id, 1);
-    return newArray;
-}
-function updateObjectInArray(array, id, actionitem) {
-    return array.map( (item, index) => {
-        if(index !== id) {
-            return item;
-        }
-        return {
-            ...item,
-            ...actionitem
-        };
-    });
-}
-function updateElementInArray(array, id, actionitem) {
-    return array.map( (item, index) => {
-        if(index !== id) {
-            return item;
-        }
-        return actionitem;
-    });
 }
 
 export default search;
