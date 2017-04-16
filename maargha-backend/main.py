@@ -19,7 +19,7 @@ class TestHandler(webapp2.RequestHandler):
             test_n = int(self.request.get("n"))
             self.runtest(test_n)
         else:
-            for i in range(1,5):
+            for i in range(2,5):
                 self.runtest(i)
                 self.response.write('<br>')
 
@@ -32,23 +32,31 @@ class TestHandler(webapp2.RequestHandler):
                 self.response.write("FAILED")
         elif test_n == 2:
             self.response.write("TEST - Find neightbour routes : ")
-            if(core_test.test_find_neightbour_nodes()):
-                self.response.write("OK")
-            else:
+            try:
+                if(core_test.test_find_neightbour_nodes()):
+                    self.response.write("OK")
+                else:
+                    self.response.write("FAILED")
+            except:
                 self.response.write("FAILED")
         elif test_n == 3:
             self.response.write("TEST - Find routes from node : ")
-            if(core_test.test_find_routes()):
-                self.response.write("OK")
-            else:
+            try:
+                if(core_test.test_find_routes()):
+                    self.response.write("OK")
+                else:
+                    self.response.write("FAILED")
+            except:
                 self.response.write("FAILED")
         elif test_n == 4:
             self.response.write("TEST - Path search : ")
-            if(core_test.test_path_search()):
-                self.response.write("OK")
-            else:
+            try:
+                if(core_test.test_path_search()):
+                    self.response.write("OK")
+                else:
+                    self.response.write("FAILED")
+            except:
                 self.response.write("FAILED")
-
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/test', TestHandler),
