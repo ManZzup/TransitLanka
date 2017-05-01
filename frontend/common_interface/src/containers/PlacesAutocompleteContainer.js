@@ -9,6 +9,8 @@ import Awesomplete from '../libs/awesomplete.js';
 class PlacesAutocompleteContainer extends Component{
   componentDidMount(){
     var input = document.getElementById(this.props.id);
+    window.autocomplete = [];
+
     input.addEventListener('awesomplete-selectcomplete', function(e){
       this.props.actions.selectLocation(e.target.value,this.props.id);
     }.bind(this));
@@ -17,11 +19,16 @@ class PlacesAutocompleteContainer extends Component{
 
   render(){
     if(document.getElementById(this.props.id)){
-      new Awesomplete(document.getElementById(this.props.id),
-                              {
-                                list: this.props.locations.map( (l) => l.node),
-                                minChars: 3
-                              });
+      if(window.autocomplete[this.props.id] == null){
+        window.autocomplete[this.props.id] = new Awesomplete(document.getElementById(this.props.id),
+                                {
+                                  list: this.props.locations.map( (l) => l.node),
+                                  minChars: 3
+                                });
+      }else{
+        window.autocomplete[this.props.id].list = this.props.locations.map( (l) => l.node);
+        window.autocomplete[this.props.id].evaluate();
+      }
     }
 
     return(
@@ -30,7 +37,6 @@ class PlacesAutocompleteContainer extends Component{
             id={this.props.id}
             placeholder={this.props.placeholder}
             onTextChange={this.props.api.apiSearchLocation}
-            locations={this.props.locations}
             value={this.props.value}
         />
     );

@@ -1,0 +1,3 @@
+rootProject.name = 'common_interface_app'
+
+include ':app'

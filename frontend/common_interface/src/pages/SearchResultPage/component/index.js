@@ -7,8 +7,8 @@ var style = {
   wrapper : {
   },
   column_1 : {
-    borderRight: '1px solid #ccc',
-    height:'100vh'
+    height:'100vh',
+    boxShadow: '2px 1px 3px 1px #ccc',
   },
   heading : {
     fontFamily: ['Open Sans Condensed', 'sans-serif']
@@ -36,12 +36,12 @@ const SearchResultPageComponent = (props) => (
           </div>
           <SearchButtonContainer />
 
-          <ResultsContainer />
+
 
 
       </div>
       <div className="large-7 small-12 columns end">
-
+          <ResultsContainer />
       </div>
     </div>
 );

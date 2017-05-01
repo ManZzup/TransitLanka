@@ -4,7 +4,7 @@ import App from './App';
 import './index.css';
 import { Router, Route, browserHistory, hashHistory } from 'react-router'
 import MainLayoutContainer from './pages/MainLayoutContainer';
-import VerifyData from './VerifyData';
+import VerifyDataContainer from './pages/VerifyDataContainer';
 import { Provider } from 'react-redux'
 import { createStore,applyMiddleware } from 'redux'
 import rootReducer from './reducers'
@@ -28,7 +28,7 @@ ReactDOM.render(
 
       <Route component={MainLayoutContainer}>
         <Route path="/" component={App} />
-        <Route path="/verify" component={VerifyData} />
+        <Route path="/verify" component={VerifyDataContainer} />
       </Route>
 
   </Router>

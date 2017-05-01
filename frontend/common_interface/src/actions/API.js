@@ -2,6 +2,7 @@ import fetch from 'isomorphic-fetch';
 import { browserHistory }  from 'react-router'
 
 const API_BASE = "http://localhost:8080/api/";
+// export const API_BASE = "https://transitlanka-158812.appspot.com/api/";
 
 export const SEARCH_LOCATION = "SEARCH_LOCATION";
 export const SEARCH_LOCATION_SUCCESS = "SEARCH_LOCATION_SUCCESS";
