@@ -1,8 +1,8 @@
 import fetch from 'isomorphic-fetch';
 import {setPopup,resetState} from './'
 
-// export const API_BASE = "http://localhost:8080/api/";
-export const API_BASE = "https://transitlanka-158812.appspot.com/api/";
+export const API_BASE = "http://localhost:8080/api/";
+// export const API_BASE = "https://transitlanka-158812.appspot.com/api/";
 
 export const SUBMIT_RECORD = "SUBMIT_RECORD";
 export const SUBMIT_RECORD_SUCCESS = "SUBMIT_RECORD_SUCCESS";

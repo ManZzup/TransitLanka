@@ -7,6 +7,7 @@ Main application reqeusts handelr
 import webapp2
 from models import Location
 from test import core_test
+from core import data_processor
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
@@ -57,7 +58,13 @@ class TestHandler(webapp2.RequestHandler):
                     self.response.write("FAILED")
             except:
                 self.response.write("FAILED")
+
+class ControlHandler(webapp2.RequestHandler):
+    def get(self):
+        data_processor.clean_location_nodes()
+        
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/test', TestHandler),
+    ('/control', ControlHandler),
 ], debug=True)

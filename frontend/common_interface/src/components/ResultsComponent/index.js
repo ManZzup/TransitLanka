@@ -1,4 +1,5 @@
 import React from 'react';
+import TrainingButtonContainer from '../../containers/TrainingButtonContainer';
 
 var style = {
   result:{
@@ -21,6 +22,16 @@ var style = {
     lineHeight:'40px',
     textAlign: 'center'
   },
+  btn_check_active:{
+    color:'#333',
+    width:'40px',
+    backgroundColor: '#ffae00',
+    margin:'-5px',
+    height:'40px',
+    lineHeight:'40px',
+    textAlign: 'center',
+    fontSize:'28px'
+  },
   panel_content:{
     border:'1px solid #1C6BA0',
     borderTop: 'none',
@@ -32,6 +43,13 @@ var style = {
     marginLeft:'-5px',
     marginRight:'-5px',
     paddingTop:'5px'
+  },
+  heading1:{
+    fontSize:'20px',
+    padding:'5px',
+    backgroundColor:'#ffae00',
+    color:'#fff',
+    textAlign:'center'
   }
 };
 
@@ -39,12 +57,22 @@ const ResultsComponent = (props) => (
   <div id="results" className="small-12 columns" style={{paddingTop:'10px'}}>
 
       {props.results.map( (r,i) => (
-        <div className="panel row" style={style.result}>
+        <div className="panel row result" style={style.result} key={i}>
             <div className="header large-12 columns" style={style.header}>
                 {r.title}
-                <a href="javascript:void(0)" className="float-right" style={style.btn_check}>
-                  <i className="fa fa-check"></i>
-                </a>
+
+                {!props.hasSelectedResponse &&
+                  <a href="javascript:void(0)" className="float-right btn_check" style={style.btn_check}
+                                                                                 onClick={() => props.onSelectResponse(r.key)}>
+                    <i className="fa fa-check"></i>
+                  </a>
+                }
+
+                {props.hasSelectedResponse &&
+                  <a href="javascript:void(0)" className="float-right btn_check" style={style.btn_check_active}>
+                    <i className="fa fa-check"></i>
+                  </a>
+                }
             </div>
             <div style={style.panel_content} className="large-12 columns">
                 {r.nodes.map( (n,j) => (
@@ -61,6 +89,14 @@ const ResultsComponent = (props) => (
             </div>
        </div>
       ) )}
+
+      { (props.hasSelectedResponse && props.hasTrainingSet) &&
+        <div className="small-12 large-4 large-centered columns" style={{textAlign:'center', border:'1px solid #ffae00'}}>
+          <h1 style={style.heading1}><i className="fa fa-heart"></i> Thank You! <i className="fa fa-heart"></i></h1>
+          <p style={{color:'#1C6BA0'}}>You are awesome!!</p>
+          <TrainingButtonContainer />
+        </div>
+      }
   </div>
 );
 

@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import { browserHistory }  from 'react-router'
+import { browserHistory,hashHistory }  from 'react-router'
 
 const API_BASE = "http://localhost:8080/api/";
 // export const API_BASE = "https://transitlanka-158812.appspot.com/api/";
@@ -69,7 +69,8 @@ export function findPath(){
 }
 
 export function findPathSuccess(results){
-  browserHistory.push('/result');
+  console.log("dispatching");
+  hashHistory.push('/result');
   return{
     type: FIND_PATH_SUCCESS,
     results: results
@@ -113,6 +114,117 @@ export function apiFindPath(){
     })
     .catch( (error) => {
       dispatch(findPathFail());
+    });
+  };
+}
+
+export const SELECT_PATH = "SELECT_PATH";
+export const SELECT_PATH_SUCCESS = "SELECT_PATH_SUCCESS";
+export const SELECT_PATH_FAIL = "SELECT_PATH_FAIL";
+
+export function selectPath(response){
+  return{
+    type: SELECT_PATH,
+    response: response
+  }
+}
+
+export function selectPathSuccess(){
+  return{
+    type: SELECT_PATH_SUCCESS
+  }
+}
+
+export function selectPathFail(){
+  console.log("TODO: failed to get path");
+  return{
+    type: SELECT_PATH_FAIL
+  }
+}
+
+export function apiSelectPath(responseKey){
+  return (dispatch,getState) => {
+    dispatch(selectPath(responseKey));
+
+    var query = `{
+            	ResponseSelection(response: "` + responseKey + `")
+            }`;
+
+    return fetch(
+          API_BASE + "query",
+          {
+            method: 'POST',
+            body: query
+          }
+    )
+    .then( (response) => response.json())
+    .then( (json) => {
+      if(json['ResponseSelection'] === 'ok'){
+        dispatch(selectPathSuccess());
+      }else{
+        dispatch(selectPathFail());
+      }
+    })
+    .catch( (error) => {
+      dispatch(selectPathFail());
+    });
+  };
+}
+
+export const GET_TRAINING_SET = "GET_TRAINING_SET";
+export const GET_TRAINING_SET_SUCCESS = "GET_TRAINING_SET_SUCCESS";
+export const GET_TRAINING_SET_FAIL = "GET_TRAINING_SET_FAIL";
+
+export function getTrainingSet(){
+  return{
+    type: GET_TRAINING_SET
+  }
+}
+
+export function getTrainingSetSuccess(results){
+  // browserHistory.push('/result');
+  console.log(results);
+  return{
+    type: GET_TRAINING_SET_SUCCESS,
+    results: results[0]['results'],
+    start: results[0]['start'],
+    end: results[0]['end']
+  }
+}
+
+export function getTrainingSetFail(){
+  console.log("TODO: failed to get path");
+  return{
+    type: GET_TRAINING_SET_FAIL
+  }
+}
+
+export function apiGetTrainingSet(){
+  return (dispatch,getState) => {
+    dispatch(findPath());
+
+    var query = `{
+            	TrainingSet{
+            		start,end,
+            		results{
+            			key,routes,hops,nodes
+            		}
+            	}
+            }`;
+
+    return fetch(
+          API_BASE + "query",
+          {
+            method: 'POST',
+            body: query
+          }
+    )
+    .then( (response) => response.json())
+    .then( (json) => {
+      dispatch(getTrainingSetSuccess(json['TrainingSet']));
+    })
+    .catch( (error) => {
+      dispatch(getTrainingSetFail());
     });
   };
 }

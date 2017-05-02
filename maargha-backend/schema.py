@@ -11,6 +11,7 @@ from models.Location import Location
 from models.Query import RouteQuery,RouteQueryResponse
 from core import data_processor
 import json
+from google.appengine.ext import ndb
 
 from core import route_processor
 
@@ -63,7 +64,9 @@ class Query(graphene.ObjectType):
     Locations = graphene.List(LocationType, search=graphene.String())
     Query = graphene.List(RouteQueryResponseType, fromNode=graphene.String(), toNode=graphene.String())
 
+    ResponseSelection = graphene.String(response=graphene.String())
     TrainingSet = graphene.List(TrainingSetResponseType, fromNode=graphene.String(), toNode=graphene.String())
+
 
     def resolve_InterimRoutes(self, args, context, info):
         if args and 'key' in args:
@@ -131,26 +134,24 @@ class Query(graphene.ObjectType):
             return RouteQueryResponse.query(RouteQueryResponse.routeQuery==query.key)
 
     def resolve_TrainingSet(self, args, context, info):
-        from_node = Location.query(Location.node == "Pettah").get()
-        to_node = Location.query(Location.node == "Kottawa").get()
-
-        query = RouteQuery(
-            fromNode = from_node.key,
-            toNode = to_node.key
+        response = data_processor.get_training_set()
+        trainingSet = TrainingSetResponseType(
+            results = response[0],
+            start = response[1],
+            end = response[2]
         )
-        query.put()
+        return [trainingSet]
 
-        route_processor.path_search(from_node,to_node,[],0,0,[from_node],[],query.key)
-        response = RouteQueryResponse.query(RouteQueryResponse.routeQuery==query.key)
-        print response.count()
-        if response.count() > 1:
-            trainingSet = TrainingSetResponseType(
-                results = response.fetch(5),
-                start = from_node.node,
-                end = to_node.node
-            )
-            return [trainingSet]
+    def resolve_ResponseSelection(self, args, context, info):
+        if args and len(args) == 1:
+            response = RouteQueryResponse.get_by_id(long(args['response']))
+            routeQuery = response.routeQuery.get()
 
+            if routeQuery:
+                routeQuery.selection = response.key
+                routeQuery.put()
+
+            return "ok"
 '''
 class ResponseType(graphene.ObjectType):
     message = graphene.String()

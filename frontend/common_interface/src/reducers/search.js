@@ -1,4 +1,7 @@
-import {SEARCH_LOCATION_SUCCESS,FIND_PATH_SUCCESS,FIND_PATH} from '../actions/API';
+import {SEARCH_LOCATION_SUCCESS,
+        FIND_PATH_SUCCESS,FIND_PATH,
+        GET_TRAINING_SET,GET_TRAINING_SET_SUCCESS,
+        SELECT_PATH} from '../actions/API';
 import {SELECT_LOCATION} from '../actions/search';
 
 const initialState = {
@@ -8,7 +11,12 @@ const initialState = {
   start_txt : "",
   end_txt : "",
   results : [],
-  showLoading : false
+  showLoading : false,
+  has_training_set : false,
+  training_set_start : "",
+  training_set_end : "",
+  has_selected_response : false,
+  selected_response_key : ""
 };
 
 export function search(state = initialState,action){
@@ -37,11 +45,25 @@ export function search(state = initialState,action){
       }
     case FIND_PATH_SUCCESS:
       return {
-        ...state, results : action.results, showLoading : false
+        ...state, results : action.results, showLoading : false, has_selected_response: false
       };
     case FIND_PATH:
       return{
         ...state, showLoading : true
+      };
+    case GET_TRAINING_SET_SUCCESS:
+      return {
+        ...state, results : action.results, showLoading : false,
+                  training_set_start: action.start, training_set_end : action.end, has_training_set : true,
+                  has_selected_response: false                  
+      };
+    case GET_TRAINING_SET:
+      return{
+        ...state, showLoading : true, has_selected_response: false
+      };
+    case SELECT_PATH:
+      return{
+        ...state, has_selected_response: true, selected_response_key:action.response
       };
     default:
       return state;

@@ -11,5 +11,11 @@ handlers:
 - url: /entry/(.*)
   static_files: frontend/entry/\1
   upload: frontend/entry/.*
-- url: .*
+- url: /(test|control)
   script: main.app
+- url: /
+  static_files: frontend/web/index.html
+  upload: frontend/web/index.html
+- url: /(.*)
+  static_files: frontend/web/\1
+  upload: frontend/web/.*
