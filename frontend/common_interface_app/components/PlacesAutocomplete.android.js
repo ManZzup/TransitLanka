@@ -6,7 +6,7 @@ const PlacesAutocomplete = (props) => (
       <Container>
         <Content>
         <InputGroup borderType="underline" >
-            <Input placeholder="placeholder" />
+            <Input placeholder="I am at" />
         </InputGroup>
         </Content>
       </Container>

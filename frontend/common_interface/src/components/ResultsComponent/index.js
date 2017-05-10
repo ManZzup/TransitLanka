@@ -1,5 +1,6 @@
 import React from 'react';
 import TrainingButtonContainer from '../../containers/TrainingButtonContainer';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 var style = {
   result:{
@@ -53,42 +54,56 @@ var style = {
   }
 };
 
-const ResultsComponent = (props) => (
-  <div id="results" className="small-12 columns" style={{paddingTop:'10px'}}>
+const ResultsComponent = (props) => {
+  const results = props.results.map( (r,i) => (
+    <div className="panel row result" style={style.result} key={i}>
+        <div className="header large-12 columns" style={style.header}>
+            {r.title}
 
-      {props.results.map( (r,i) => (
-        <div className="panel row result" style={style.result} key={i}>
-            <div className="header large-12 columns" style={style.header}>
-                {r.title}
+            {!props.hasSelectedResponse &&
+              <a href="javascript:void(0)" className="float-right btn_check" style={style.btn_check}
+                                                                             onClick={() => props.onSelectResponse(r.key)}>
+                <i className="fa fa-check"></i>
+              </a>
+            }
 
-                {!props.hasSelectedResponse &&
-                  <a href="javascript:void(0)" className="float-right btn_check" style={style.btn_check}
-                                                                                 onClick={() => props.onSelectResponse(r.key)}>
-                    <i className="fa fa-check"></i>
-                  </a>
-                }
-
-                {props.hasSelectedResponse &&
-                  <a href="javascript:void(0)" className="float-right btn_check" style={style.btn_check_active}>
-                    <i className="fa fa-check"></i>
-                  </a>
-                }
-            </div>
-            <div style={style.panel_content} className="large-12 columns">
-                {r.nodes.map( (n,j) => (
-                  <div key={j} className="row" style={style.row}>
-                      <div className="large-1 columns" style={{textAlign:'center'}} data-equalizer-watch>
-                        <i className="fa fa-bus"></i>
-                        {n.route}
-                      </div>
-                      <div className="large-11 columns end" style={{lineHeight:'40px'}} data-equalizer-watch>
-                        From <b>{n.start}</b> to <b>{n.end}</b>
-                      </div>
+            {props.hasSelectedResponse &&
+              <a href="javascript:void(0)" className="float-right btn_check" style={style.btn_check_active}>
+                <i className="fa fa-check"></i>
+              </a>
+            }
+        </div>
+        <div style={style.panel_content} className="large-12 columns">
+            {r.nodes.map( (n,j) => (
+              <div key={j} className="row" style={style.row}>
+                  <div className="large-1 columns" style={{textAlign:'center'}} data-equalizer-watch>
+                    <i className="fa fa-bus"></i>
+                    {n.route}
                   </div>
-                ) )}
-            </div>
-       </div>
-      ) )}
+                  <div className="large-11 columns end" style={{lineHeight:'40px'}} data-equalizer-watch>
+                    From <b>{n.start}</b> to <b>{n.end}</b>
+                  </div>
+              </div>
+            ) )}
+        </div>
+   </div>
+
+ ) );
+
+return(
+  <div id="results" className="small-12 columns" style={{paddingTop:'10px'}}>
+      <CSSTransitionGroup
+          transitionName="example"
+          transitionAppear={true}
+          transitionAppearTimeout={200}
+          transitionEnter={true}
+          transitionLeave={true}
+          transitionEnterTimeout={300}
+          transitionLeaveTimeout={300}>
+
+          {results}
+
+      </CSSTransitionGroup>
 
       { (props.hasSelectedResponse && props.hasTrainingSet) &&
         <div className="small-12 large-4 large-centered columns" style={{textAlign:'center', border:'1px solid #ffae00'}}>
@@ -98,6 +113,6 @@ const ResultsComponent = (props) => (
         </div>
       }
   </div>
-);
+)};
 
 export default ResultsComponent;

@@ -2,3 +2,53 @@
   color:#333 !important;
   font-size:28px;
 }
+
+
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
+
+.tran_btn_left_slide-leave{
+
+}
+.tran_btn_left_slide-leave.tran_btn_left_slide-leave-active{
+  animation: slide-out 0.3s forwards;
+}
+@keyframes slide-out {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-200%);
+  }
+}
+
+.tran_btn_left_slide-enter{
+
+}
+.tran_btn_left_slide-enter.tran_btn_left_slide-enter-active{
+  animation: slide-in 1s forwards;
+}
+@keyframes slide-in {
+  0% {
+    transform: translateX(-600%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
