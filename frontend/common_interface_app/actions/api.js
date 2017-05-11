@@ -54,3 +54,60 @@ export function apiSearchLocation(str){
     });
   };
 }
+
+export const FIND_PATH = "FIND_PATH";
+export const FIND_PATH_SUCCESS = "FIND_PATH_SUCCESS";
+export const FIND_PATH_FAIL = "FIND_PATH_FAIL";
+
+export function findPath(){
+  return{
+    type: FIND_PATH
+  }
+}
+
+export function findPathSuccess(results){
+  return{
+    type: FIND_PATH_SUCCESS,
+    results: results
+  }
+}
+
+export function findPathFail(){
+  console.log("TODO: failed to get path");
+  return{
+    type: FIND_PATH_FAIL
+  }
+}
+
+export function apiFindPath(){
+  return (dispatch,getState) => {
+    dispatch(findPath());
+
+    var start_node = getState().search.startLocationKey;
+    var end_node = getState().search.endLocationKey;
+    if(start_node === "" || end_node === ""){
+      return dispatch(findPathFail());
+    }
+
+    var query = `{
+      Query(fromNode : "`+ start_node +`", toNode : "`+ end_node +`") {
+        key,routes,hops,nodes
+      }
+    }`;
+
+    return fetch(
+          API_BASE + "query",
+          {
+            method: 'POST',
+            body: query
+          }
+    )
+    .then( (response) => response.json())
+    .then( (json) => {
+      dispatch(findPathSuccess(json['Query']));
+    })
+    .catch( (error) => {
+      dispatch(findPathFail());
+    });
+  };
+}

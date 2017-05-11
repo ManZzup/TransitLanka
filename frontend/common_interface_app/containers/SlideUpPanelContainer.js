@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import * as Actions from '../actions/search';
+import * as UI from '../actions/ui';
 
 import SlideUpPanel from '../components/SlideUpPanel';
 
@@ -63,6 +64,7 @@ class SlideUpPanelContainer extends Component{
         }
       ).start();
       isHidden = false;
+      this.props.ui.showOverlay(true);
     }
   }
 
@@ -79,6 +81,7 @@ class SlideUpPanelContainer extends Component{
         }
       ).start();
       isHidden = true;
+      this.props.ui.showOverlay(false);
     }
   }
 
@@ -92,7 +95,8 @@ class SlideUpPanelContainer extends Component{
       <SlideUpPanel bounceValue={this.state.bounceValue}
                     dataSource={this.props.locations}
                     onSelect={this.selectRow}
-                    txtInput={this.state.txtInput} />
+                    txtInput={this.state.txtInput}
+                    hidden={isHidden} />
     );
   }
 }
@@ -107,7 +111,8 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Actions, dispatch)
+    actions: bindActionCreators(Actions, dispatch),
+    ui: bindActionCreators(UI, dispatch)
   };
 }
 

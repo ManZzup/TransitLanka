@@ -1,7 +1,8 @@
-import {SLIDING_PANEL_TOGGLE} from '../actions/ui';
+import {SLIDING_PANEL_TOGGLE,SHOW_OVERLAY} from '../actions/ui';
 
 const initialState = {
-  slidingPanelUp : false
+  slidingPanelUp : false,
+  showOverlay : false
 };
 
 export function ui(state = initialState,action){
@@ -9,6 +10,10 @@ export function ui(state = initialState,action){
     case SLIDING_PANEL_TOGGLE:
       return {
         ...state, slidingPanelUp : !state.slidingPanelUp
+      };
+    case SHOW_OVERLAY:
+      return {
+        ...state, showOverlay : action.show
       };
     default:
       return state;

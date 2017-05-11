@@ -12,8 +12,9 @@ import {
 
 import rootReducer from './reducers'
 import HomePageContainer from './pages/HomePageContainer';
-import PlacesAutocomplete from './components/PlacesAutocomplete';
-import SlideUpPanelContainer from './containers/SlideUpPanelContainer';
+import SearchResultPageContainer from './pages/SearchResultPageContainer';
+import NavigationPageContainer from './pages/NavigationPageContainer';
+
 import * as Api from './actions/api';
 
 let store = createStore(rootReducer,applyMiddleware(
@@ -22,6 +23,8 @@ let store = createStore(rootReducer,applyMiddleware(
 
 const App = StackNavigator({
   Main: {screen: HomePageContainer},
+  Result: {screen: SearchResultPageContainer},
+  Navigation: {screen: NavigationPageContainer},
 });
 
 

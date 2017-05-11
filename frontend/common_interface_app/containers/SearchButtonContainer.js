@@ -8,7 +8,7 @@ import * as API from '../actions/api';
 class SearchButtonContainer extends Component {
   render() {
     return (
-        <TouchableOpacity onPress={ () => {console.log("taet")}}
+        <TouchableOpacity onPress={this.props.onPress}
                           style={styles.button}
                           activeOpacity={0.8}>
             <Text style={styles.buttonText}>Do MAGIC!</Text>

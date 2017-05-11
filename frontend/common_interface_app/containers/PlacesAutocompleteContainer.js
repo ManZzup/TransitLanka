@@ -13,6 +13,7 @@ class PlacesAutocompleteContainer extends Component {
 
     this.state = {
       txt: "",
+      borderColor:'#cccccc'
     };
   }
 
@@ -20,15 +21,33 @@ class PlacesAutocompleteContainer extends Component {
     this.props.api.apiSearchLocation(this.state.txt);
     this.props.showPanel();
   }
+
+  _onFocus(){
+    this.props.hidePanel();
+    this.setState({
+      borderColor:'#1C6BA0'
+    });
+  }
+
+  _onBlur(){
+    this.setState({
+      borderColor:'#cccccc'
+    });
+  }
+
   render() {
     return (
 
           <TextInput onChangeText={ (text) => {this.setState({txt:text})}}
                      value={this.state.txt}
-                     style={{width:"80%"}}
                      returnKeyType={"search"}
-                     onFocus={ () => this.props.hidePanel()}
+                     onFocus={ () => { this._onFocus() } }
+                     onBlur={ () => { this._onBlur() } }
                      onSubmitEditing={ (e) => this._searchText() }
+                     underlineColorAndroid={"transparent"}
+                     style={{width:'80%', borderWidth:4, borderColor:this.state.borderColor,
+                             marginBottom: 10, marginTop: 10, fontSize:20, paddingLeft:15, paddingRight:15}}
+                    placeholder={this.props.placeholder}
                       />
 
 
@@ -51,13 +70,18 @@ var styles = StyleSheet.create({
   buttonText: {
     fontSize: 17,
     color: "#007AFF"
+  },
+  txtInput:{
+    width:"80%",
+    borderWidth:1,
+    borderColor:'#cccccc'
   }
 });
 
 
 function mapStateToProps(state) {
    return {
-      
+
    };
 }
 function mapDispatchToProps(dispatch) {
