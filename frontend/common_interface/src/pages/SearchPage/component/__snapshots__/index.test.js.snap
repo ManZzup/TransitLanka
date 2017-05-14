@@ -1,0 +1,96 @@
+exports[`test renders Search Page correctly 1`] = `
+<div
+  className="off-canvas-wrapper-inner"
+  data-off-canvas-wrapper={true}>
+  <div
+    className="off-canvas position-left"
+    data-off-canvas={true}
+    data-position="left"
+    id="side_panel">
+    <div
+      className="row column" />
+  </div>
+  <div
+    className="off-canvas position-right"
+    data-off-canvas={true}
+    data-position="right"
+    data-transition="push"
+    id="side_panel">
+    <div
+      className="row column" />
+  </div>
+  <div
+    className="large-5 large-centered columns"
+    style={
+      Object {
+        "paddingTop": "100px",
+        "textAlign": "center",
+      }
+    }>
+    <h1
+      style={
+        Object {
+          "fontFamily": Array [
+            "Open Sans Condensed",
+            "sans-serif",
+          ],
+        }
+      }>
+       
+      <font
+        color="#1C6BA0">
+        transit
+      </font>
+      <font
+        color="#ffae00">
+        Lanka
+      </font>
+    </h1>
+    <div
+      className="row">
+      <div
+        className="input-group">
+        <span
+          className="input-group-label">
+          I am at
+        </span>
+        <input
+          className="input-group-field awesomplete"
+          defaultValue={undefined}
+          id="txt_start"
+          onChange={[Function]}
+          placeholder="Select start location"
+          type="text" />
+      </div>
+    </div>
+    <div
+      className="row">
+      <div
+        className="input-group">
+        <span
+          className="input-group-label">
+          I am going
+        </span>
+        <input
+          className="input-group-field awesomplete"
+          defaultValue={undefined}
+          id="txt_end"
+          onChange={[Function]}
+          placeholder="Select end location"
+          type="text" />
+      </div>
+    </div>
+    <div
+      className="row">
+      <span>
+        <input
+          className="button warning"
+          onClick={[Function]}
+          type="button"
+          value="Do MAGIC!" />
+      </span>
+      <span />
+    </div>
+  </div>
+</div>
+`;

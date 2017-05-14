@@ -1,0 +1,31 @@
+exports[`test renders loading button correctly 1`] = `
+<div
+  className="row">
+  <span />
+  <span>
+    <span
+      className="button warning"
+      href="#"
+      onClick={[Function]}>
+      <img
+        alt=""
+        src="/assets/gear.gif"
+        width="40px" />
+    </span>
+  </span>
+</div>
+`;
+
+exports[`test renders search button correctly 1`] = `
+<div
+  className="row">
+  <span>
+    <input
+      className="button warning"
+      onClick={undefined}
+      type="button"
+      value="Do MAGIC!" />
+  </span>
+  <span />
+</div>
+`;

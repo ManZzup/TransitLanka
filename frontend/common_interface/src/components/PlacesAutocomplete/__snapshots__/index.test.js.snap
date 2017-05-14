@@ -1,0 +1,19 @@
+exports[`test renders autocomplete text input correctly 1`] = `
+<div
+  className="row">
+  <div
+    className="input-group">
+    <span
+      className="input-group-label">
+      Test Input
+    </span>
+    <input
+      className="input-group-field awesomplete"
+      defaultValue={undefined}
+      id="0"
+      onChange={[Function]}
+      placeholder="Test Input"
+      type="text" />
+  </div>
+</div>
+`;

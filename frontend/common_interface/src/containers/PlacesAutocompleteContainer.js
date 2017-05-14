@@ -10,10 +10,11 @@ class PlacesAutocompleteContainer extends Component{
   componentDidMount(){
     var input = document.getElementById(this.props.id);
     window.autocomplete = [];
-
-    input.addEventListener('awesomplete-selectcomplete', function(e){
-      this.props.actions.selectLocation(e.target.value,this.props.id);
-    }.bind(this));
+    if(input){
+      input.addEventListener('awesomplete-selectcomplete', function(e){
+        this.props.actions.selectLocation(e.target.value,this.props.id);
+      }.bind(this));
+    }
   }
 
 

@@ -1,0 +1,242 @@
+exports[`test renders Training Page with Training Set correctly 1`] = `
+<div
+  className="">
+  <div
+    className="large-4 small-12 columns"
+    style={
+      Object {
+        "boxShadow": "2px 1px 3px 1px #ccc",
+        "height": "100vh",
+      }
+    }>
+    <div
+      style={Object {}}>
+      <h1
+        style={
+          Object {
+            "fontFamily": Array [
+              "Open Sans Condensed",
+              "sans-serif",
+            ],
+            "marginBottom": "-10px",
+          }
+        }>
+         
+        <font
+          color="#1C6BA0">
+          transit
+        </font>
+        <font
+          color="#ffae00">
+          Lanka
+        </font>
+      </h1>
+      <span
+        style={
+          Object {
+            "backgroundColor": "#ffae00",
+            "color": "#fff",
+            "fontSize": "20px",
+            "padding": "5px",
+          }
+        }>
+        trainMe
+      </span>
+      <br />
+      <br />
+      <div>
+        Which option out of the shown routes you will take to travel 
+        <br />
+        <br />
+        <div
+          className="row">
+          <div
+            className="input-group">
+            <span
+              className="input-group-label">
+              From
+            </span>
+            <input
+              className="input-group-field awesomplete"
+              readOnly={true}
+              type="text"
+              value={undefined} />
+          </div>
+        </div>
+        <div
+          className="row">
+          <div
+            className="input-group">
+            <span
+              className="input-group-label">
+              To
+            </span>
+            <input
+              className="input-group-field awesomplete"
+              readOnly={true}
+              type="text"
+              value={undefined} />
+          </div>
+        </div>
+      </div>
+      <div
+        className="row">
+        <input
+          className="button warning"
+          onClick={[Function]}
+          type="button"
+          value="New Training Set" />
+      </div>
+      <div>
+        <hr />
+        <h2
+          style={
+            Object {
+              "color": "#1C6BA0",
+              "fontFamily": Array [
+                "Open Sans Condensed",
+                "sans-serif",
+              ],
+              "fontSize": "28px",
+              "fontWeight": "bold",
+            }
+          }>
+          FAQ
+        </h2>
+        <div>
+          <h3
+            style={
+              Object {
+                "fontSize": "20px",
+              }
+            }>
+            <font
+              color="#ffae00">
+              Q.
+            </font>
+             How to select an option?
+          </h3>
+          <p>
+            <font
+              color="#1C6BA0">
+              A.
+            </font>
+              Click the ✔ Button to accept the option
+          </p>
+        </div>
+        <div>
+          <h3
+            style={
+              Object {
+                "fontSize": "20px",
+              }
+            }>
+            <font
+              color="#ffae00">
+              Q.
+            </font>
+             What if I dont know the answer?
+          </h3>
+          <p>
+            <font
+              color="#1C6BA0">
+              A.
+            </font>
+              Press the \"New Training Set\" button to get a new set
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="large-7 small-12 columns end">
+    <div
+      className="small-12 columns"
+      id="results"
+      style={
+        Object {
+          "paddingTop": "10px",
+        }
+      }>
+      <span />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`test renders Training Page without Training Set correctly 1`] = `
+<div
+  className="">
+  <div
+    className="large-4 small-12 columns"
+    style={
+      Object {
+        "boxShadow": "2px 1px 3px 1px #ccc",
+        "height": "100vh",
+      }
+    }>
+    <div
+      style={Object {}}>
+      <h1
+        style={
+          Object {
+            "fontFamily": Array [
+              "Open Sans Condensed",
+              "sans-serif",
+            ],
+            "marginBottom": "-10px",
+          }
+        }>
+         
+        <font
+          color="#1C6BA0">
+          transit
+        </font>
+        <font
+          color="#ffae00">
+          Lanka
+        </font>
+      </h1>
+      <span
+        style={
+          Object {
+            "backgroundColor": "#ffae00",
+            "color": "#fff",
+            "fontSize": "20px",
+            "padding": "5px",
+          }
+        }>
+        trainMe
+      </span>
+      <br />
+      <br />
+      <p>
+        Hi, welcome to training session of transitLanka! 
+        <br />
+        To begin please press the button below
+      </p>
+      <div
+        className="row">
+        <input
+          className="button warning"
+          onClick={[Function]}
+          type="button"
+          value="New Training Set" />
+      </div>
+    </div>
+  </div>
+  <div
+    className="large-7 small-12 columns end">
+    <div
+      className="small-12 columns"
+      id="results"
+      style={
+        Object {
+          "paddingTop": "10px",
+        }
+      }>
+      <span />
+    </div>
+  </div>
+</div>
+`;

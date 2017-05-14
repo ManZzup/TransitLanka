@@ -1,0 +1,25 @@
+exports[`test renders loading button correctly 1`] = `
+<div
+  className="row">
+  <span
+    className="button warning"
+    href="javascript:void(0)"
+    onClick={[Function]}>
+    <img
+      alt=""
+      src="/assets/gear.gif"
+      width="40px" />
+  </span>
+</div>
+`;
+
+exports[`test renders training button correctly 1`] = `
+<div
+  className="row">
+  <input
+    className="button warning"
+    onClick={undefined}
+    type="button"
+    value="New Training Set" />
+</div>
+`;
