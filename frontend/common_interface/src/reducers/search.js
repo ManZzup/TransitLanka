@@ -2,7 +2,7 @@ import {SEARCH_LOCATION_SUCCESS,
         FIND_PATH_SUCCESS,FIND_PATH,FIND_PATH_FAIL,
         GET_TRAINING_SET,GET_TRAINING_SET_SUCCESS,
         SELECT_PATH} from '../actions/API';
-import {SELECT_LOCATION} from '../actions/search';
+import {SELECT_LOCATION,SET_ENABLE_TRAIN} from '../actions/search';
 
 const initialState = {
   locations : [],
@@ -16,7 +16,8 @@ const initialState = {
   training_set_start : "",
   training_set_end : "",
   has_selected_response : false,
-  selected_response_key : ""
+  selected_response_key : "",
+  enableTrains : true
 };
 
 export function search(state = initialState,action){
@@ -68,6 +69,10 @@ export function search(state = initialState,action){
     case SELECT_PATH:
       return{
         ...state, has_selected_response: true, selected_response_key:action.response
+      };
+    case SET_ENABLE_TRAIN:
+      return{
+        ...state, enableTrains: action.isEnabled
       };
     default:
       return state;

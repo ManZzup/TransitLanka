@@ -115,7 +115,7 @@ def get_query_results(query_key):
         return results.fetch()
     return None
 
-def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,query_key,training=False):
+def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,query_key,en_trains=True,training=False):
     """
     Function that runs the path search. algorithm will parallely check till the end node is reached
     Recursive calls are taken as micro service calls
@@ -147,7 +147,7 @@ def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,qu
     :rtype: None
     :return: No returns, updates the database entities
     """
-
+    print "USE TRAINS",en_trains
     if found_max_results(query_key):
         return
 
@@ -197,15 +197,17 @@ def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,qu
                 explore_nodes.append( (rl.node.get(),r[0].routeNumber,hops+abs(rl.nodeIndex-r[1])) )
 
     #add the train aggregation
-    mock = MockAPI()
-    train_route_locations = mock.get_trains_from_node(node)
-    temp_routes = []
-    for trl in train_route_locations:
-        if trl[1] in explored_routes:
-            continue
-        explore_nodes.append( (trl[0],trl[1],hops+1) )
-        temp_routes.append(trl[1])
-    explored_routes.extend(temp_routes)
+    #use the enable check condition
+    if en_trains:
+        mock = MockAPI()
+        train_route_locations = mock.get_trains_from_node(node)
+        temp_routes = []
+        for trl in train_route_locations:
+            if trl[1] in explored_routes:
+                continue
+            explore_nodes.append( (trl[0],trl[1],hops+1) )
+            temp_routes.append(trl[1])
+        explored_routes.extend(temp_routes)
 
     # print "next nodes",[p[0].node for p in explore_nodes]
     if found_max_results(query_key):
@@ -216,7 +218,7 @@ def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,qu
             path.append(en[0].node)
             path_routes.append(en[1])
 
-            path_search(en[0],end_node,explored_routes,en[2],transfers+1,path,path_routes,query_key,training)
+            path_search(en[0],end_node,explored_routes,en[2],transfers+1,path,path_routes,query_key,en_trains,training)
 
             path.remove(en[0].node)
             path_routes.remove(en[1])
@@ -231,5 +233,6 @@ def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,qu
                             'path' : json.dumps(path),
                             'path_routes' : json.dumps(path_routes),
                             'query_key': query_key.urlsafe(),
-                            'cur_route' : en[1]
+                            'cur_route' : en[1],
+                            'en_trains' : json.dumps(en_trains)
                           })

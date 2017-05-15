@@ -25,6 +25,7 @@ class PathSearch(webapp2.RequestHandler):
         path_routes = json.loads(self.request.get('path_routes'))
         query_key = self.request.get('query_key')
         cur_route = self.request.get('cur_route')
+        en_trains = json.loads(self.request.get('en_trains'))
 
         node_key = ndb.Key(urlsafe=node_key)
         node = node_key.get()
@@ -37,9 +38,9 @@ class PathSearch(webapp2.RequestHandler):
         path.append(node.node)
         path_routes.append(cur_route)
 
-        
+
         if not route_processor.found_max_results(query_key):
-            route_processor.path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,query_key)
+            route_processor.path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,query_key,en_trains)
 
 class ViewResults(webapp2.RequestHandler):
     """

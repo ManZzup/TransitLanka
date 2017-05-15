@@ -2,6 +2,7 @@ import React from 'react';
 import PlacesAutocompleteContainer from '../../../containers/PlacesAutocompleteContainer';
 import ResultsContainer from '../../../containers/ResultsContainer';
 import SearchButtonContainer from '../../../containers/SearchButtonContainer';
+import TrainCheckContainer from '../../../containers/TrainCheckContainer';
 
 var style = {
   wrapper : {
@@ -36,6 +37,8 @@ const SearchResultPageComponent = (props) => (
                  placeholder="Select end location"
                  value={props.endText}
               />
+
+              <TrainCheckContainer />
 
           </div>
           <SearchButtonContainer />

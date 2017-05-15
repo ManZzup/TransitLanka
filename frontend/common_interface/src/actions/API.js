@@ -96,13 +96,14 @@ export function apiFindPath(){
 
     var start_node = getState().search.start_location;
     var end_node = getState().search.end_location;
+    var enableTrains = getState().search.enableTrains;
 
     if(start_node === "" || end_node === ""){
       return dispatch(findPathFail());
     }
 
     var query = `{
-      Query(fromNode : "`+ start_node +`", toNode : "`+ end_node +`")
+      Query(fromNode : "`+ start_node +`", toNode : "`+ end_node +`", enableTrains: `+ enableTrains +`)
     }`;
 
     return fetch(
@@ -154,7 +155,9 @@ function checkResults(queryKey){
       }
       if(window.pollCount >= POLL_RETRY_COUNT){
         clearInterval(window.resultPoll);
-        dispatch(findPathFail());
+        if(json['QueryResults'].length === 0){
+          dispatch(findPathFail());
+        }
       }
     })
     .catch( (error) => {
