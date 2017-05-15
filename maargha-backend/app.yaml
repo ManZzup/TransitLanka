@@ -5,6 +5,10 @@ threadsafe: yes
 handlers:
 - url: /api/.*
   script: api.app
+- url: /routing/.*
+  script: routing_service.app
+- url: /train/.*
+  script: railway_api_integrator.app
 - url: /entry/
   static_files: frontend/entry/index.html
   upload: frontend/entry/index.html

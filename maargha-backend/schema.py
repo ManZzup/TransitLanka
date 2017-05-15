@@ -152,26 +152,5 @@ class Query(graphene.ObjectType):
                 routeQuery.put()
 
             return "ok"
-'''
-class ResponseType(graphene.ObjectType):
-    message = graphene.String()
-    code = graphene.Int
-
-class CreateInterimRecords(graphene.Mutation):
-    class Input:
-        record_data = graphene.String()
-
-    response = graphene.Field(ResponseType)
-
-    @classmethod
-    def mutate(cls, input, context, info):
-        record_data = input.get('record_data')
-        print record_data
-
-        return CreateInterimRecords(response = ResponseType(message="done", code="200"))
-
-class Mutation(graphene.ObjectType):
-    create_interims = CreateInterimRecords.Field()
-'''
 
 schema = graphene.Schema(query=Query)

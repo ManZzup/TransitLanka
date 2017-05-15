@@ -52,17 +52,17 @@ class TestHandler(webapp2.RequestHandler):
         elif test_n == 4:
             self.response.write("TEST - Path search : ")
             try:
-                if(core_test.test_path_search()):
-                    self.response.write("OK")
-                else:
-                    self.response.write("FAILED")
+                query_key = core_test.test_path_search()
+                self.response.write("Query submitted for processing <br />")
+                self.response.write("Use <a href='/routing/view_results?query_key=%s'>Following link to view results </a>"
+                                            % query_key.urlsafe())
             except:
                 self.response.write("FAILED")
 
 class ControlHandler(webapp2.RequestHandler):
     def get(self):
         data_processor.clean_location_nodes()
-        
+
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/test', TestHandler),

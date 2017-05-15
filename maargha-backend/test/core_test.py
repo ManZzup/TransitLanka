@@ -49,10 +49,10 @@ def test_path_search():
     )
     query.put()
 
-    route_processor.path_search(start_node,end_node,[],0,0,[start_node],[],query.key)
-
-    results = RouteQueryResponse.query(RouteQueryResponse.routeQuery==query.key).get()
-    if results:
-        return True
-
-    return False
+    route_processor.path_search(start_node,end_node,[],0,0,[start_node.node],[],query.key)
+    return query.key;
+    # results = RouteQueryResponse.query(RouteQueryResponse.routeQuery==query.key).get()
+    # if results:
+    #     return True
+    #
+    # return False
