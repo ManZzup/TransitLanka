@@ -77,7 +77,12 @@ const ResultsComponent = (props) => {
             {r.nodes.map( (n,j) => (
               <div key={j} className="row" style={style.row}>
                   <div className="large-1 columns" style={{textAlign:'center'}} data-equalizer-watch>
-                    <i className="fa fa-bus"></i>
+                    { (n.mode === "train") &&
+                      <i className="fa fa-train"></i>
+                    }
+                    { (n.mode === "bus") &&
+                      <i className="fa fa-bus"></i>
+                    }
                     {n.route}
                   </div>
                   <div className="large-11 columns end" style={{lineHeight:'40px'}} data-equalizer-watch>

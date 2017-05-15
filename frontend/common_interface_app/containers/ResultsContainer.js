@@ -19,11 +19,9 @@ class ResultsContainer extends Component {
     this.props.navigate('Navigation');
   }
   render() {
-    console.log("ersl",this.props.results);
     var results = [];
     for(var i=0;i<this.props.results.length;i++){
       var title = "";
-      console.log(this.props.results[i].routes);
       this.props.results[i].routes.forEach((n,j) => {
         title += n;
         if(j !== this.props.results[i].routes.length-1){

@@ -1,5 +1,5 @@
 import {SEARCH_LOCATION_SUCCESS,
-        FIND_PATH_SUCCESS,FIND_PATH,
+        FIND_PATH_SUCCESS,FIND_PATH,FIND_PATH_FAIL,
         GET_TRAINING_SET,GET_TRAINING_SET_SUCCESS,
         SELECT_PATH} from '../actions/API';
 import {SELECT_LOCATION} from '../actions/search';
@@ -45,17 +45,21 @@ export function search(state = initialState,action){
       }
     case FIND_PATH_SUCCESS:
       return {
-        ...state, results : action.results, showLoading : false, has_selected_response: false
+        ...state, results : action.results, showLoading : false
+      };
+    case FIND_PATH_FAIL:
+      return {
+        ...state, results : [], showLoading : false
       };
     case FIND_PATH:
       return{
-        ...state, showLoading : true
+        ...state, showLoading : true, results: [], has_selected_response: false
       };
     case GET_TRAINING_SET_SUCCESS:
       return {
         ...state, results : action.results, showLoading : false,
                   training_set_start: action.start, training_set_end : action.end, has_training_set : true,
-                  has_selected_response: false                  
+                  has_selected_response: false
       };
     case GET_TRAINING_SET:
       return{

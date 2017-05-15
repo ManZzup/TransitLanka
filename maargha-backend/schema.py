@@ -12,6 +12,7 @@ from models.Query import RouteQuery,RouteQueryResponse
 from core import data_processor
 import json
 from google.appengine.ext import ndb
+from google.appengine.api import memcache
 
 from core import route_processor
 
@@ -62,7 +63,8 @@ class Query(graphene.ObjectType):
     InterimRecords = graphene.List(InterimRecordType, route=graphene.String())
     InterimAction = graphene.String(route=graphene.String(), action=graphene.String())
     Locations = graphene.List(LocationType, search=graphene.String())
-    Query = graphene.List(RouteQueryResponseType, fromNode=graphene.String(), toNode=graphene.String())
+    Query = graphene.String(fromNode=graphene.String(), toNode=graphene.String())
+    QueryResults = graphene.List(RouteQueryResponseType, queryKey=graphene.String())
 
     ResponseSelection = graphene.String(response=graphene.String())
     TrainingSet = graphene.List(TrainingSetResponseType, fromNode=graphene.String(), toNode=graphene.String())
@@ -114,24 +116,42 @@ class Query(graphene.ObjectType):
 
     def resolve_Query(self, args, context, info):
         if args and len(args) == 2:
-            from_node = Location.get_by_id(long(args['fromNode']))
-            to_node = Location.get_by_id(long(args['toNode']))
+            memcache_key = "%s//%s" % (args['fromNode'],args['toNode'])
+            memcache_data = memcache.get(memcache_key)
 
-            if (not from_node) or (not to_node):
-                return None
+            if memcache_data != None:
+                query_key = memcache_data
+            else:
+                from_node = Location.get_by_id(long(args['fromNode']))
+                to_node = Location.get_by_id(long(args['toNode']))
 
-            query = RouteQuery(
-                fromNode = from_node.key,
-                toNode = to_node.key
-            )
-            query.put()
+                if (not from_node) or (not to_node):
+                    return None
 
+                query = RouteQuery(
+                    fromNode = from_node.key,
+                    toNode = to_node.key
+                )
+                query.put()
 
-            route_processor.path_search(from_node,to_node,[],0,0,[from_node],[],query.key)
+                memcache.add(
+                    key=memcache_key,
+                    value=query.key,
+                    time=86400
+                )
 
-            #find responses
-            # print RouteQueryResponse.query(RouteQueryResponse.routeQuery==query.key).get()
-            return RouteQueryResponse.query(RouteQueryResponse.routeQuery==query.key)
+                route_processor.path_search(from_node,to_node,[],0,0,[from_node.node],[],query.key)
+                query_key = query.key
+                #find responses
+                # print RouteQueryResponse.query(RouteQueryResponse.routeQuery==query.key).get()
+            return query_key.urlsafe()
+
+    def resolve_QueryResults(self, args, context, info):
+        if args and len(args) == 1:
+            query_key = args['queryKey']
+            query_key = ndb.Key(urlsafe=query_key)
+
+            return route_processor.get_query_results(query_key)
 
     def resolve_TrainingSet(self, args, context, info):
         response = data_processor.get_training_set()

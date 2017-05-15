@@ -14,11 +14,12 @@ from models.Road import Road
 from models.RouteLocation import RouteLocation
 from models.Query import RouteQueryResponse
 
+from railway_api_integrator import MockAPI
+
 '''Constants'''
 NEIGHBOUR_RADIUS_LAT = 0.001
 NEIGHBOUR_RADIUS_LNG = 0.001
 MAX_QUERY_RESULTS = 3
-
 
 def find_neighbouring_nodes(node):
     """
@@ -86,9 +87,14 @@ def found_max_results(query_key):
     :return: true of count(results) >= MAX_QUERY_RESULTS
     """
 
-    results = RouteQueryResponse.query(RouteQueryResponse.routeQuery==query_key)
-
-    if results.count() >= MAX_QUERY_RESULTS:
+    # results = RouteQueryResponse.query(RouteQueryResponse.routeQuery==query_key)
+    # print "Checking count ",results.count()
+    # if results.count() >= MAX_QUERY_RESULTS:
+    #     print "return true"
+    #     return True
+    # return False
+    query = query_key.get()
+    if query.doneRouting:
         return True
     return False
 
@@ -109,7 +115,7 @@ def get_query_results(query_key):
         return results.fetch()
     return None
 
-def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,query_key):
+def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,query_key,training=False):
     """
     Function that runs the path search. algorithm will parallely check till the end node is reached
     Recursive calls are taken as micro service calls
@@ -155,11 +161,17 @@ def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,qu
 
     for n in neightbours:
         if n.key == end_node.key:
-            print "FOUND ROUTE"
-            print "HOPS :",hops
-            print "TRANSFERS:",transfers-1
-            print "PATH:",[p for p in path]
-            print "ROUTES:",[pr for pr in path_routes]
+            # print "FOUND ROUTE"
+            # print "HOPS :",hops
+            # print "TRANSFERS:",transfers-1
+            # print "PATH:",[p for p in path]
+            # print "ROUTES:",[pr for pr in path_routes]
+
+            if len(get_query_results(query_key))+1 >= MAX_QUERY_RESULTS:
+                query = query_key.get()
+                query.doneRouting = True
+                query.put()
+
             response = RouteQueryResponse(
                 routeQuery = query_key,
                 hops = hops,
@@ -173,7 +185,7 @@ def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,qu
 
         for r in node_routes:
             # r[0] <- is the Route instance
-            if r[0] in explored_routes:
+            if r[0].routeNumber in explored_routes:
                 continue
 
             route_locations = RouteLocation.query(RouteLocation.route == r[0].key,
@@ -182,27 +194,42 @@ def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,qu
                 explored_routes.append(r[0].routeNumber)
 
             for rl in route_locations:
-                explore_nodes.append( (rl.node.get(),r[0],hops+abs(rl.nodeIndex-r[1])) )
+                explore_nodes.append( (rl.node.get(),r[0].routeNumber,hops+abs(rl.nodeIndex-r[1])) )
+
+    #add the train aggregation
+    mock = MockAPI()
+    train_route_locations = mock.get_trains_from_node(node)
+    temp_routes = []
+    for trl in train_route_locations:
+        if trl[1] in explored_routes:
+            continue
+        explore_nodes.append( (trl[0],trl[1],hops+1) )
+        temp_routes.append(trl[1])
+    explored_routes.extend(temp_routes)
+
     # print "next nodes",[p[0].node for p in explore_nodes]
+    if found_max_results(query_key):
+        return
+
     for en in explore_nodes:
-        # path.append(en[0])
-        # path_routes.append(en[1])
-        #
-        # path_search(en[0],end_node,explored_routes,en[2],transfers+1,path,path_routes,query_key)
+        if training:
+            path.append(en[0].node)
+            path_routes.append(en[1])
 
-        taskqueue.add(url = '/routing/path_search',queue_name = 'routing',
-                      params = {
-                        'node' : en[0].key.urlsafe(),
-                        'end_node': end_node.key.urlsafe(),
-                        'explored_routes' : json.dumps(explored_routes),
-                        'hops' : en[2],
-                        'transfers' : transfers+1,
-                        'path' : json.dumps(path),
-                        'path_routes' : json.dumps(path_routes),
-                        'query_key': query_key.urlsafe(),
-                        'cur_route' : en[1].routeNumber
-                      })
+            path_search(en[0],end_node,explored_routes,en[2],transfers+1,path,path_routes,query_key,training)
 
-
-        # path.remove(en[0])
-        # path_routes.remove(en[1])
+            path.remove(en[0].node)
+            path_routes.remove(en[1])
+        else:
+            taskqueue.add(url = '/routing/path_search',queue_name = 'routing',
+                          params = {
+                            'node' : en[0].key.urlsafe(),
+                            'end_node': end_node.key.urlsafe(),
+                            'explored_routes' : json.dumps(explored_routes),
+                            'hops' : en[2],
+                            'transfers' : transfers+1,
+                            'path' : json.dumps(path),
+                            'path_routes' : json.dumps(path_routes),
+                            'query_key': query_key.urlsafe(),
+                            'cur_route' : en[1]
+                          })

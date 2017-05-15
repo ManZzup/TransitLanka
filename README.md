@@ -28,7 +28,7 @@ Tasks preceeding deadlin:
 Testing
 * All react components are modular
 * Unit testing for core routing and data processing functions
-* Itegration tests for the API using Postman
+* Integration tests for the API using Postman
 
 
 Next Iteration

@@ -18,12 +18,6 @@ const Results = (props) => (
 
         </View>
 );
-//
-// { props.results.map( (result,i) => {
-//   <View key={i}>
-//     <Text>"test"</Text>
-//   </View>
-// } )}
 
 var styles = StyleSheet.create({
   container: {
@@ -34,7 +28,7 @@ var styles = StyleSheet.create({
     paddingTop:10
   },
   button:{
-    
+
   },
   list:{
     alignSelf: 'stretch',

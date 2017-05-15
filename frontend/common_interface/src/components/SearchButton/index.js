@@ -4,7 +4,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 const SearchButton = (props) => (
   <div className="row">
   <CSSTransitionGroup
-      transitionName="tran_btn_left_slide"
+      transitionName={ (props.homeButton) ? "home_tran_btn_left_slide" : "tran_btn_left_slide"}
       transitionEnterTimeout={1000}
       transitionLeaveTimeout={300}>
     {!props.loadButton &&
@@ -13,7 +13,7 @@ const SearchButton = (props) => (
     </CSSTransitionGroup>
 
     <CSSTransitionGroup
-        transitionName="tran_btn_left_slide"
+        transitionName={ (props.homeButton) ? "home_tran_btn_left_slide" : "tran_btn_left_slide"}
         transitionEnterTimeout={1000}
         transitionLeaveTimeout={300}>
           {props.loadButton &&

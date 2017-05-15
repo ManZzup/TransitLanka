@@ -19,7 +19,11 @@ const SearchResultPageComponent = (props) => (
     <div className="">
       <div className="large-4 small-12 columns"  style={style.column_1}>
           <div style={style.wrapper}>
-            <h1 style={style.heading}> <font color="#1C6BA0">transit</font><font color="#ffae00">Lanka</font></h1>
+            <a href="#">
+              <h1 style={style.heading}>
+                <font color="#1C6BA0">transit</font><font color="#ffae00">Lanka</font>
+              </h1>
+            </a>
             <PlacesAutocompleteContainer
                 label="I am at"
                 id="txt_start"

@@ -3,6 +3,9 @@ import { browserHistory,hashHistory }  from 'react-router'
 
 const API_BASE = "http://localhost:8080/api/";
 // export const API_BASE = "https://transitlanka-158812.appspot.com/api/";
+const POLL_RETRY_TIMEOUT = 800;
+const POLL_RETRY_COUNT = 20;
+const MAX_RESULT_COUNT = 3;
 
 export const SEARCH_LOCATION = "SEARCH_LOCATION";
 export const SEARCH_LOCATION_SUCCESS = "SEARCH_LOCATION_SUCCESS";
@@ -78,7 +81,6 @@ export function findPathSuccess(results){
 }
 
 export function findPathFail(){
-  console.log("TODO: failed to get path");
   return{
     type: FIND_PATH_FAIL
   }
@@ -86,6 +88,10 @@ export function findPathFail(){
 
 export function apiFindPath(){
   return (dispatch,getState) => {
+    if(window.resultPoll){
+      clearInterval(window.resultPoll);
+    }
+
     dispatch(findPath());
 
     var start_node = getState().search.start_location;
@@ -96,8 +102,36 @@ export function apiFindPath(){
     }
 
     var query = `{
-      Query(fromNode : "`+ start_node +`", toNode : "`+ end_node +`") {
-        key,routes,hops,nodes
+      Query(fromNode : "`+ start_node +`", toNode : "`+ end_node +`")
+    }`;
+
+    return fetch(
+          API_BASE + "query",
+          {
+            method: 'POST',
+            body: query
+          }
+    )
+    .then( (response) => response.json())
+    .then( (json) => {
+      var queryKey = json['Query'];
+      window.pollCount = 0;
+      window.resultPoll = setInterval(function(){
+        dispatch(checkResults(queryKey));
+      },POLL_RETRY_TIMEOUT);
+      ;
+    })
+    .catch( (error) => {
+      dispatch(findPathFail());
+    });
+  };
+}
+
+function checkResults(queryKey){
+  return (dispatch,getState) => {
+    var query = `{
+      QueryResults(queryKey: "` + queryKey + `"){
+        key,nodes,routes,hops
       }
     }`;
 
@@ -110,13 +144,27 @@ export function apiFindPath(){
     )
     .then( (response) => response.json())
     .then( (json) => {
-      dispatch(findPathSuccess(json['Query']));
+      window.pollCount++;
+
+      if(json['QueryResults'].length >= MAX_RESULT_COUNT){
+        clearInterval(window.resultPoll);
+        dispatch(findPathSuccess(json['QueryResults']));
+      }else if(json['QueryResults'].length > 0){
+        dispatch(findPathSuccess(json['QueryResults']));
+      }
+      if(window.pollCount >= POLL_RETRY_COUNT){
+        clearInterval(window.resultPoll);
+        dispatch(findPathFail());
+      }
     })
     .catch( (error) => {
+      clearInterval(window.resultPoll);
       dispatch(findPathFail());
     });
   };
 }
+
+
 
 export const SELECT_PATH = "SELECT_PATH";
 export const SELECT_PATH_SUCCESS = "SELECT_PATH_SUCCESS";

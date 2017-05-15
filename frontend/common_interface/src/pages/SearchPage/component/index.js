@@ -40,7 +40,7 @@ const SearchPageComponent = (props) => (
              id="txt_end"
              placeholder="Select end location"
           />
-        <SearchButtonContainer />
+        <SearchButtonContainer homeButton={true} />
         {/*
         <div className="row">
           <a href="#" className="button warning tiny"><img src="/assets/gear.gif" width="60px" /></a>

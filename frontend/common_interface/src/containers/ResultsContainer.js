@@ -32,7 +32,8 @@ class ResultsContainer extends Component{
         nodeSet.push({
           route: routes[j],
           start: nodes[j],
-          end: nodes[j+1]
+          end: nodes[j+1],
+          mode: (routes[j][0] === "T") ? "train" : "bus"
         });
       }
 
@@ -43,8 +44,7 @@ class ResultsContainer extends Component{
       }
       resultSet.push(result);
     }
-    console.log("change");
-    console.log(this.props.hasSelectedResponse);
+    console.log(resultSet);
     return(
       <ResultsComponent results={resultSet}
                         onSelectResponse={this.props.api.apiSelectPath}

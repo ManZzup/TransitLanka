@@ -37,7 +37,9 @@ class PathSearch(webapp2.RequestHandler):
         path.append(node.node)
         path_routes.append(cur_route)
 
-        route_processor.path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,query_key)
+        
+        if not route_processor.found_max_results(query_key):
+            route_processor.path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,query_key)
 
 class ViewResults(webapp2.RequestHandler):
     """

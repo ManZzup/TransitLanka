@@ -4,6 +4,7 @@ from models.Location import Location
 class RouteQuery(ndb.Expando):
     fromNode = ndb.KeyProperty(kind=Location)
     toNode = ndb.KeyProperty(kind=Location)
+    doneRouting = ndb.BooleanProperty(required=False, default=False)
 
 
 class RouteQueryResponse(ndb.Model):

@@ -93,7 +93,7 @@ def get_training_set():
     )
     query.put()
 
-    route_processor.path_search(from_node,to_node,[],0,0,[from_node],[],query.key)
+    route_processor.path_search(from_node,to_node,[],0,0,[from_node.node],[],query.key,True)
     response = RouteQueryResponse.query(RouteQueryResponse.routeQuery==query.key)
     if response.count() > 1:
         return (

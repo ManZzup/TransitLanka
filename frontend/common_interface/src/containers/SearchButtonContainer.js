@@ -9,7 +9,8 @@ class SearchButtonContainer extends Component{
   render(){
     return(
       <SearchButton onSearch={this.props.api.apiFindPath}
-                    loadButton={this.props.showLoadButton} />
+                    loadButton={this.props.showLoadButton}
+                    homeButton={this.props.homeButton} />
     );
   }
 }
