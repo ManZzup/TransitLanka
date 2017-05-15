@@ -1,5 +1,8 @@
 const API_BASE = "http://10.0.2.2:8080/api/";
 // export const API_BASE = "https://transitlanka-158812.appspot.com/api/";
+const POLL_RETRY_TIMEOUT = 800;
+const POLL_RETRY_COUNT = 20;
+const MAX_RESULT_COUNT = 3;
 
 export const SEARCH_LOCATION = "SEARCH_LOCATION";
 export const SEARCH_LOCATION_SUCCESS = "SEARCH_LOCATION_SUCCESS";
@@ -66,6 +69,7 @@ export function findPath(){
 }
 
 export function findPathSuccess(results){
+  console.log(results);
   return{
     type: FIND_PATH_SUCCESS,
     results: results
@@ -81,17 +85,46 @@ export function findPathFail(){
 
 export function apiFindPath(){
   return (dispatch,getState) => {
+    if(window.resultPoll){
+      clearInterval(window.resultPoll);
+    }
+
     dispatch(findPath());
 
     var start_node = getState().search.startLocationKey;
     var end_node = getState().search.endLocationKey;
-    if(start_node === "" || end_node === ""){
-      return dispatch(findPathFail());
-    }
 
     var query = `{
-      Query(fromNode : "`+ start_node +`", toNode : "`+ end_node +`") {
-        key,routes,hops,nodes
+      Query(fromNode : "`+ start_node +`", toNode : "`+ end_node +`")
+    }`;
+
+    return fetch(
+          API_BASE + "query",
+          {
+            method: 'POST',
+            body: query
+          }
+    )
+    .then( (response) => response.json())
+    .then( (json) => {
+      var queryKey = json['Query'];
+      window.pollCount = 0;
+      window.resultPoll = setInterval(function(){
+        dispatch(checkResults(queryKey));
+      },POLL_RETRY_TIMEOUT);
+      ;
+    })
+    .catch( (error) => {
+      dispatch(findPathFail());
+    });
+  };
+}
+
+function checkResults(queryKey,cache_key){
+  return (dispatch,getState) => {
+    var query = `{
+      QueryResults(queryKey: "` + queryKey + `"){
+        key,nodes,routes,hops
       }
     }`;
 
@@ -104,9 +137,22 @@ export function apiFindPath(){
     )
     .then( (response) => response.json())
     .then( (json) => {
-      dispatch(findPathSuccess(json['Query']));
+      window.pollCount++;
+
+      if(json['QueryResults'].length >= MAX_RESULT_COUNT){
+        clearInterval(window.resultPoll);
+        dispatch(findPathSuccess(json['QueryResults']));
+      }else if(json['QueryResults'].length > 0){
+        dispatch(findPathSuccess(json['QueryResults']));
+        LocalStorage.save(cache_key,JSON.stringify(json['QueryResults']));
+      }
+      if(window.pollCount >= POLL_RETRY_COUNT){
+        clearInterval(window.resultPoll);
+        dispatch(findPathFail());
+      }
     })
     .catch( (error) => {
+      clearInterval(window.resultPoll);
       dispatch(findPathFail());
     });
   };

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as API from '../actions/api';
+import * as UI from '../actions/ui';
 import SlideUpPanelContainer from '../containers/SlideUpPanelContainer';
 
 class PlacesAutocompleteContainer extends Component {
@@ -27,6 +28,7 @@ class PlacesAutocompleteContainer extends Component {
     this.setState({
       borderColor:'#1C6BA0'
     });
+    this.props.showLocSearch()
   }
 
   _onBlur(){
@@ -35,10 +37,14 @@ class PlacesAutocompleteContainer extends Component {
     });
   }
 
+  _onChange(text){
+    this.setState({txt:text});
+    this.props.ui.updateCurText(text,this.props.id);
+  }
   render() {
     return (
 
-          <TextInput onChangeText={ (text) => {this.setState({txt:text})}}
+          <TextInput onChangeText={ (text) => { this._onChange(text) }}
                      value={this.state.txt}
                      returnKeyType={"search"}
                      onFocus={ () => { this._onFocus() } }
@@ -86,7 +92,8 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    api: bindActionCreators(API, dispatch)
+    api: bindActionCreators(API, dispatch),
+    ui: bindActionCreators(UI, dispatch)
   };
 }
 

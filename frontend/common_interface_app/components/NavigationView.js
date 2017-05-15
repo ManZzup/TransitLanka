@@ -1,9 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet,FlatList, TouchableHighlight  } from 'react-native';
+import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 const RouteView = (props) => (
     <View style={styles.rowview}>
-        <Text style={styles.col_1}>{props.route}</Text>
+        <View style={{minWidth:50, alignItems:'center'}}>
+            <FontAwesome style={{color:'#ffae00'}}>{ (props.mode==="train") ? Icons.train : Icons.bus}</FontAwesome>
+            <Text style={styles.col_1}>{props.route}</Text>
+        </View>
         <Text style={styles.col_2}>From {props.start} to {props.end}</Text>
     </View>
 );
@@ -15,7 +19,7 @@ const NavigationView = (props) => (
 
             <FlatList data={props.result.nodes}
                       style={styles.list}
-                      renderItem={({item}) => <RouteView route={item.route} start={item.start} end={item.end} />} />
+                      renderItem={({item}) => <RouteView route={item.route} start={item.start} end={item.end} mode={item.mode} />} />
           </View>
         </View>
 );
@@ -48,7 +52,8 @@ var styles = StyleSheet.create({
     borderWidth:0
   },
   col_1:{
-    paddingRight:10
+    paddingRight:10,
+    color:'#1C6BA0',
   },
   col_2:{
 

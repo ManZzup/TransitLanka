@@ -6,13 +6,13 @@ import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 import * as API from '../actions/api';
 
-class SearchButtonContainer extends Component {
+class SearchLocationButtonContainer extends Component {
   render() {
     return (
         <TouchableOpacity onPress={this.props.onPress}
                           style={styles.button}
                           activeOpacity={0.8}>
-            <Text style={styles.buttonText}>Do MAGIC!</Text>
+            <Text style={styles.buttonText}><FontAwesome>{Icons.search}</FontAwesome> search</Text>
         </TouchableOpacity>
     );
   }
@@ -32,7 +32,7 @@ var styles = StyleSheet.create({
 
 function mapStateToProps(state) {
    return {
-
+     txt: state.ui.curText
    };
 }
 function mapDispatchToProps(dispatch) {
@@ -41,4 +41,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(SearchButtonContainer);
+export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(SearchLocationButtonContainer);

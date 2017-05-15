@@ -96,7 +96,8 @@ class SlideUpPanelContainer extends Component{
                     dataSource={this.props.locations}
                     onSelect={this.selectRow}
                     txtInput={this.state.txtInput}
-                    hidden={isHidden} />
+                    hidden={isHidden}
+                    onClose={ () => {this.hideSubview()}} />
     );
   }
 }

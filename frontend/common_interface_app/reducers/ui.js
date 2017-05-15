@@ -1,8 +1,10 @@
-import {SLIDING_PANEL_TOGGLE,SHOW_OVERLAY} from '../actions/ui';
+import {SLIDING_PANEL_TOGGLE,SHOW_OVERLAY,UPDATE_CUR_SEARCH_TEXT} from '../actions/ui';
 
 const initialState = {
   slidingPanelUp : false,
-  showOverlay : false
+  showOverlay : false,
+  curText: "",
+  curInput: null
 };
 
 export function ui(state = initialState,action){
@@ -14,6 +16,10 @@ export function ui(state = initialState,action){
     case SHOW_OVERLAY:
       return {
         ...state, showOverlay : action.show
+      };
+    case UPDATE_CUR_SEARCH_TEXT:
+      return {
+        ...state, curText : action.curText, curInput: action.curInput
       };
     default:
       return state;

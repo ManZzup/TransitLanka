@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, TouchableHighlight, View, TextInput, ListView } from 'react-native';
+import { Text, StyleSheet, TouchableHighlight, View, TextInput, ListView, Keyboard } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -8,6 +8,7 @@ import PlacesAutocompleteContainer from '../containers/PlacesAutocompleteContain
 import SlideUpPanelContainer from '../containers/SlideUpPanelContainer';
 import SearchButtonContainer from '../containers/SearchButtonContainer';
 import SelectedPlace from '../components/SelectedPlace';
+import SearchLocationButtonContainer from '../containers/SearchLocationButtonContainer';
 
 import * as API from '../actions/api';
 import * as Search from '../actions/search';
@@ -18,8 +19,17 @@ class HomePageContainer extends Component {
     header: null
   }
 
+  constructor(props){
+    super(props);
+
+    this.state = {
+      showLocSearch: false
+    };
+  }
+
   _showPanel(txtInput){
     this.panel.getWrappedInstance().showSubview(txtInput);
+    this._hideSearchButton();
   }
   _hidePanel(){
     this.panel.getWrappedInstance().hideSubview();
@@ -33,6 +43,25 @@ class HomePageContainer extends Component {
   _resetLocation(loc){
     this.props.actions.resetLocation(loc);
   }
+
+  _showSearchButton(){
+    this.setState({
+      showLocSearch : true
+    });
+  }
+
+  _hideSearchButton(){
+    this.setState({
+      showLocSearch : false
+    });
+  }
+
+  _searchLocation(){
+    Keyboard.dismiss();
+    this.props.api.apiSearchLocation(this.props.curText);
+    this._showPanel(this.props.curInput);
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -44,7 +73,8 @@ class HomePageContainer extends Component {
             <PlacesAutocompleteContainer showPanel={ () => {this._showPanel("start")}}
                                          hidePanel={ () => {this._hidePanel()}}
                                          placeholder={"Where are you?"}
-                                         id="start" />
+                                         id="start"
+                                         showLocSearch={ () => {this._showSearchButton()}} />
           }
           {this.props.startLocation !== "" &&
             <SelectedPlace place={this.props.startLocation} onPress={() => { this._resetLocation("start") }}></SelectedPlace>
@@ -54,13 +84,22 @@ class HomePageContainer extends Component {
             <PlacesAutocompleteContainer showPanel={ () => {this._showPanel("end")}}
                                          hidePanel={ () => {this._hidePanel()}}
                                          placeholder={"Where are you going?"}
-                                         id="end" />
+                                         id="end"
+                                         showLocSearch={ () => {this._showSearchButton()}} />
           }
           {this.props.endLocation !== "" &&
             <SelectedPlace place={this.props.endLocation} onPress={() => { this._resetLocation("end") }}></SelectedPlace>
           }
 
-          <SearchButtonContainer onPress={ () => { this._doSearch()} } />
+          { this.state.showLocSearch &&
+              <SearchLocationButtonContainer onPress={ () => { this._searchLocation()} } />
+          }
+          { !this.state.showLocSearch &&
+            (this.props.startLocation !== "" && this.props.endLocation !== "") &&
+              <SearchButtonContainer onPress={ () => { this._doSearch()} } />
+
+          }
+
           {this.props.showOverlay &&
               <View style={styles.overlay}></View>
           }
@@ -112,7 +151,9 @@ function mapStateToProps(state) {
    return {
      startLocation: state.search.startLocation,
      endLocation: state.search.endLocation,
-     showOverlay: state.ui.showOverlay
+     showOverlay: state.ui.showOverlay,
+     curText: state.ui.curText,
+     curInput: state.ui.curInput
    };
 }
 function mapDispatchToProps(dispatch) {

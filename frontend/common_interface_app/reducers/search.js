@@ -1,4 +1,4 @@
-import {SEARCH_LOCATION_SUCCESS,FIND_PATH_SUCCESS,SEARCH_LOCATION,FIND_PATH} from '../actions/api';
+import {SEARCH_LOCATION_SUCCESS,FIND_PATH_SUCCESS,SEARCH_LOCATION,FIND_PATH,FIND_PATH_FAIL} from '../actions/api';
 import {SELECT_LOCATION,SELECT_PATH,RESET_LOCATION} from '../actions/search';
 
 const initialState = {
@@ -8,7 +8,8 @@ const initialState = {
   endLocation : "",
   endLocationKey: "",
   results: [],
-  selectedResult: ""
+  selectedResult: "",
+  showLoading: true
 };
 
 export function search(state = initialState,action){
@@ -33,11 +34,15 @@ export function search(state = initialState,action){
       }
     case FIND_PATH:
       return {
-        ...state, results : []
+        ...state, results : [], showLoading: true
       };
     case FIND_PATH_SUCCESS:
       return {
-        ...state, results : action.results
+        ...state, results : action.results, showLoading: false
+      };
+    case FIND_PATH_FAIL:
+      return {
+        ...state, results : [], showLoading: false
       };
     case SELECT_PATH:
       console.log(action);

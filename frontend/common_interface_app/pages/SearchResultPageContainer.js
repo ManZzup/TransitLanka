@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, TextInput, StyleSheet, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import ResultsContainer from '../containers/ResultsContainer';
 
@@ -14,8 +15,12 @@ class SearchResultPageContainer extends Component {
   }
 
   render() {
+    console.log(this.props.showLoading);
     return (
-        <ResultsContainer navigate={this.props.navigation.navigate} />
+        <View style={styles.container}>
+          <ResultsContainer navigate={this.props.navigation.navigate} />
+          <Spinner visible={this.props.showLoading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+        </View>
     );
   }
 }
@@ -23,9 +28,6 @@ class SearchResultPageContainer extends Component {
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
   }
 });
 
@@ -33,7 +35,8 @@ var styles = StyleSheet.create({
 function mapStateToProps(state) {
    return {
      startLocation: state.search.startLocation,
-     endLocation: state.search.endLocation
+     endLocation: state.search.endLocation,
+     showLoading: state.search.showLoading
    };
 }
 function mapDispatchToProps(dispatch) {

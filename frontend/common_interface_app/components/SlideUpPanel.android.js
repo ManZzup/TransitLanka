@@ -8,7 +8,8 @@ import {
   Button,
   ListView,
   TouchableHighlight,
-  FlatList
+  FlatList,
+  TouchableOpacity
 } from 'react-native';
 
 const RowView = (props) => (
@@ -21,7 +22,9 @@ const SlideUpPanel = (props) => (
         <Animated.View
           style={[styles.subView,
             {transform: [{translateY: props.bounceValue}]}]}>
-
+          <TouchableOpacity onPress={props.onClose} style={styles.button} activeOpacity={0.8}>
+            <Text style={styles.button_text}>Close</Text>
+          </TouchableOpacity>
           <ListView
             dataSource={props.dataSource}
             enableEmptySections={true}
@@ -42,8 +45,24 @@ var styles = StyleSheet.create({
     textAlign:'center',
     lineHeight:30,
     fontSize:20,
-    textAlignVertical:'center'
-  }
+    textAlignVertical:'center',
+    borderBottomColor:'#cccccc',
+    borderBottomWidth:1,
+    lineHeight:30,
+    paddingBottom:10
+  },
+  button:{
+    backgroundColor:'#1C6BA0',
+    borderBottomColor:'#000000',
+    borderBottomWidth:2
+  },
+  button_text:{
+    textAlign: 'center',
+    fontSize:20,
+    lineHeight:20,
+    paddingTop:10,
+    paddingBottom:10
+  },
 });
 
 
