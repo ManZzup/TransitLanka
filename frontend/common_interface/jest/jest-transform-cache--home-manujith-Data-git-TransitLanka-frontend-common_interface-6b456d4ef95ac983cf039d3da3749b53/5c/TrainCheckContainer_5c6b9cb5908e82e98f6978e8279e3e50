@@ -1,0 +1,29 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/home/manujith/Data/git/TransitLanka/frontend/common_interface/src/containers/TrainCheckContainer.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_reactRedux = require('react-redux');
+var /* istanbul ignore next */_redux = require('redux');
+
+var /* istanbul ignore next */_TrainCheck = require('../components/TrainCheck'); /* istanbul ignore next */var _TrainCheck2 = _interopRequireDefault(_TrainCheck);
+var /* istanbul ignore next */_search = require('../actions/search'); /* istanbul ignore next */var Actions = _interopRequireWildcard(_search); /* istanbul ignore next */function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}var
+
+TrainCheckContainer = function (_Component) {_inherits(TrainCheckContainer, _Component);function TrainCheckContainer() {_classCallCheck(this, TrainCheckContainer);return _possibleConstructorReturn(this, (TrainCheckContainer.__proto__ || Object.getPrototypeOf(TrainCheckContainer)).apply(this, arguments));}_createClass(TrainCheckContainer, [{ key: 'render', value: function render()
+    {
+
+      return (
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_TrainCheck2.default, /* istanbul ignore next */{ enableTrains: this.props.enableTrains,
+          onChange: this.props.actions.setUseTrains, __source: { fileName: _jsxFileName, lineNumber: 12 }, __self: this }));
+
+    } }]);return TrainCheckContainer;}(_react.Component);
+
+
+function mapStateToProps(state) {
+  return {
+    enableTrains: state.search.enableTrains };
+
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: /* istanbul ignore next */(0, _redux.bindActionCreators)(Actions, dispatch) };
+
+} /* istanbul ignore next */exports.default =
+
+/* istanbul ignore next */(0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TrainCheckContainer);

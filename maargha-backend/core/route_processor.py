@@ -147,7 +147,7 @@ def path_search(node,end_node,explored_routes,hops,transfers,path,path_routes,qu
     :rtype: None
     :return: No returns, updates the database entities
     """
-    print "USE TRAINS",en_trains
+
     if found_max_results(query_key):
         return
 

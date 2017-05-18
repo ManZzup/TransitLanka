@@ -1,0 +1,57 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/home/manujith/Data/git/TransitLanka/frontend/common_interface/src/pages/SearchPage/component/index.js';var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_PlacesAutocompleteContainer = require('../../../containers/PlacesAutocompleteContainer'); /* istanbul ignore next */var _PlacesAutocompleteContainer2 = _interopRequireDefault(_PlacesAutocompleteContainer);
+var /* istanbul ignore next */_SearchButtonContainer = require('../../../containers/SearchButtonContainer'); /* istanbul ignore next */var _SearchButtonContainer2 = _interopRequireDefault(_SearchButtonContainer);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+var style = {
+  wrapper: {
+    textAlign: 'center',
+    paddingTop: '100px' },
+
+  heading: {
+    fontFamily: ['Open Sans Condensed', 'sans-serif'] } };
+
+
+
+var SearchPageComponent = function SearchPageComponent(props) /* istanbul ignore next */{return (
+
+    /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'off-canvas-wrapper-inner', /* istanbul ignore next */'data-off-canvas-wrapper': /* istanbul ignore next */true, __source: { fileName: _jsxFileName, lineNumber: 17 }, __self: undefined },
+
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'off-canvas position-left', id: 'side_panel', /* istanbul ignore next */'data-off-canvas': /* istanbul ignore next */true, /* istanbul ignore next */'data-position': 'left', __source: { fileName: _jsxFileName, lineNumber: 19 }, __self: undefined },
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'row column', __source: { fileName: _jsxFileName, lineNumber: 20 }, __self: undefined })),
+
+
+
+
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'off-canvas position-right', id: 'side_panel', /* istanbul ignore next */'data-off-canvas': /* istanbul ignore next */true, /* istanbul ignore next */'data-position': 'right', /* istanbul ignore next */'data-transition': 'push', __source: { fileName: _jsxFileName, lineNumber: 25 }, __self: undefined },
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'row column', __source: { fileName: _jsxFileName, lineNumber: 26 }, __self: undefined })),
+
+
+
+
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'large-5 large-centered columns', style: style.wrapper, __source: { fileName: _jsxFileName, lineNumber: 31 }, __self: undefined },
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'h1', /* istanbul ignore next */{ style: style.heading, __source: { fileName: _jsxFileName, lineNumber: 32 }, __self: undefined }, /* istanbul ignore next */' ', /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'font', /* istanbul ignore next */{ color: '#1C6BA0', __source: { fileName: _jsxFileName, lineNumber: 32 }, __self: undefined }, /* istanbul ignore next */'transit'), /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'font', /* istanbul ignore next */{ color: '#ffae00', __source: { fileName: _jsxFileName, lineNumber: 32 }, __self: undefined }, /* istanbul ignore next */'Lanka')),
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_PlacesAutocompleteContainer2.default, /* istanbul ignore next */{
+          label: 'I am at',
+          id: 'txt_start',
+          placeholder: 'Select start location', __source: { fileName: _jsxFileName, lineNumber: 33 }, __self: undefined }),
+
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_PlacesAutocompleteContainer2.default, /* istanbul ignore next */{
+          label: 'I am going',
+          id: 'txt_end',
+          placeholder: 'Select end location', __source: { fileName: _jsxFileName, lineNumber: 38 }, __self: undefined }),
+
+
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_SearchButtonContainer2.default, /* istanbul ignore next */{ homeButton: true, __source: { fileName: _jsxFileName, lineNumber: 44 }, __self: undefined }))));}; /* istanbul ignore next */exports.default =
+
+
+
+
+
+
+
+
+
+
+
+
+SearchPageComponent;

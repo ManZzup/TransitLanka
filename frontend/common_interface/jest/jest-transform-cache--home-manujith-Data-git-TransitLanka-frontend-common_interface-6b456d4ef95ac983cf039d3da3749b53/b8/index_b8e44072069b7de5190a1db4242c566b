@@ -1,0 +1,101 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/home/manujith/Data/git/TransitLanka/frontend/common_interface/src/pages/TrainingPage/TrainingPageComponent/index.js';var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_PlacesAutocompleteContainer = require('../../../containers/PlacesAutocompleteContainer'); /* istanbul ignore next */var _PlacesAutocompleteContainer2 = _interopRequireDefault(_PlacesAutocompleteContainer);
+var /* istanbul ignore next */_ResultsContainer = require('../../../containers/ResultsContainer'); /* istanbul ignore next */var _ResultsContainer2 = _interopRequireDefault(_ResultsContainer);
+var /* istanbul ignore next */_TrainingButtonContainer = require('../../../containers/TrainingButtonContainer'); /* istanbul ignore next */var _TrainingButtonContainer2 = _interopRequireDefault(_TrainingButtonContainer);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+var style = {
+  wrapper: {},
+
+  column_1: {
+    height: '100vh',
+    boxShadow: '2px 1px 3px 1px #ccc' },
+
+  heading: {
+    fontFamily: ['Open Sans Condensed', 'sans-serif'],
+    marginBottom: '-10px' },
+
+  sub_heading: {
+    fontSize: '20px',
+    backgroundColor: '#ffae00',
+    padding: '5px',
+    color: '#fff' },
+
+  heading2: {
+    fontFamily: ['Open Sans Condensed', 'sans-serif'],
+    fontSize: '28px',
+    color: '#1C6BA0',
+    fontWeight: 'bold' },
+
+  heading3: {
+    fontSize: '20px' } };
+
+
+
+var TrainingPageComponent = function TrainingPageComponent(props) /* istanbul ignore next */{return (
+    /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: '', __source: { fileName: _jsxFileName, lineNumber: 35 }, __self: undefined },
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'large-4 small-12 columns', style: style.column_1, __source: { fileName: _jsxFileName, lineNumber: 36 }, __self: undefined },
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ style: style.wrapper, __source: { fileName: _jsxFileName, lineNumber: 37 }, __self: undefined },
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'h1', /* istanbul ignore next */{ style: style.heading, __source: { fileName: _jsxFileName, lineNumber: 38 }, __self: undefined }, /* istanbul ignore next */' ', /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'font', /* istanbul ignore next */{ color: '#1C6BA0', __source: { fileName: _jsxFileName, lineNumber: 38 }, __self: undefined }, /* istanbul ignore next */'transit'), /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'font', /* istanbul ignore next */{ color: '#ffae00', __source: { fileName: _jsxFileName, lineNumber: 38 }, __self: undefined }, /* istanbul ignore next */'Lanka')),
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'span', /* istanbul ignore next */{ style: style.sub_heading, __source: { fileName: _jsxFileName, lineNumber: 39 }, __self: undefined }, /* istanbul ignore next */'trainMe'),
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'br', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 40 }, __self: undefined }), /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'br', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 40 }, __self: undefined }),
+
+          props.hasTrainingSet &&
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 43 }, __self: undefined }, /* istanbul ignore next */'Which option out of the shown routes you will take to travel ',
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'br', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 44 }, __self: undefined }), /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'br', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 44 }, __self: undefined }),
+
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'row', __source: { fileName: _jsxFileName, lineNumber: 46 }, __self: undefined },
+              /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'input-group', __source: { fileName: _jsxFileName, lineNumber: 47 }, __self: undefined },
+                /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'span', /* istanbul ignore next */{ className: 'input-group-label', __source: { fileName: _jsxFileName, lineNumber: 48 }, __self: undefined }, /* istanbul ignore next */'From'),
+                /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'input', /* istanbul ignore next */{ className: 'input-group-field awesomplete', type: 'text',
+                  readOnly: /* istanbul ignore next */true,
+                  value: props.startLocation, __source: { fileName: _jsxFileName, lineNumber: 49 }, __self: undefined }))),
+
+
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'row', __source: { fileName: _jsxFileName, lineNumber: 54 }, __self: undefined },
+              /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'input-group', __source: { fileName: _jsxFileName, lineNumber: 55 }, __self: undefined },
+                /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'span', /* istanbul ignore next */{ className: 'input-group-label', __source: { fileName: _jsxFileName, lineNumber: 56 }, __self: undefined }, /* istanbul ignore next */'To'),
+                /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'input', /* istanbul ignore next */{ className: 'input-group-field awesomplete', type: 'text',
+                  readOnly: /* istanbul ignore next */true,
+                  value: props.endLocation, __source: { fileName: _jsxFileName, lineNumber: 57 }, __self: undefined })))),
+
+
+
+
+
+
+          !props.hasTrainingSet &&
+
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'p', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 68 }, __self: undefined }, /* istanbul ignore next */'Hi, welcome to training session of transitLanka! ',
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'br', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 69 }, __self: undefined }), /* istanbul ignore next */'To begin please press the button below'),
+
+
+
+
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_TrainingButtonContainer2.default, /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 74 }, __self: undefined }),
+
+          props.hasTrainingSet &&
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 77 }, __self: undefined },
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'hr', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 78 }, __self: undefined }),
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'h2', /* istanbul ignore next */{ style: style.heading2, __source: { fileName: _jsxFileName, lineNumber: 79 }, __self: undefined }, /* istanbul ignore next */'FAQ'),
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 80 }, __self: undefined },
+              /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'h3', /* istanbul ignore next */{ style: style.heading3, __source: { fileName: _jsxFileName, lineNumber: 81 }, __self: undefined }, /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'font', /* istanbul ignore next */{ color: '#ffae00', __source: { fileName: _jsxFileName, lineNumber: 81 }, __self: undefined }, /* istanbul ignore next */'Q.'), /* istanbul ignore next */' How to select an option?'),
+              /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'p', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 82 }, __self: undefined }, /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'font', /* istanbul ignore next */{ color: '#1C6BA0', __source: { fileName: _jsxFileName, lineNumber: 82 }, __self: undefined }, /* istanbul ignore next */'A.'), /* istanbul ignore next */'  Click the \u2714 Button to accept the option')),
+
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 84 }, __self: undefined },
+              /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'h3', /* istanbul ignore next */{ style: style.heading3, __source: { fileName: _jsxFileName, lineNumber: 85 }, __self: undefined }, /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'font', /* istanbul ignore next */{ color: '#ffae00', __source: { fileName: _jsxFileName, lineNumber: 85 }, __self: undefined }, /* istanbul ignore next */'Q.'), /* istanbul ignore next */' What if I dont know the answer?'),
+              /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'p', /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 86 }, __self: undefined }, /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'font', /* istanbul ignore next */{ color: '#1C6BA0', __source: { fileName: _jsxFileName, lineNumber: 86 }, __self: undefined }, /* istanbul ignore next */'A.'), /* istanbul ignore next */'  Press the "New Training Set" button to get a new set'))))),
+
+
+
+
+
+
+
+
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'large-7 small-12 columns end', __source: { fileName: _jsxFileName, lineNumber: 95 }, __self: undefined },
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_ResultsContainer2.default, /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 96 }, __self: undefined }))));}; /* istanbul ignore next */exports.default =
+
+
+
+
+TrainingPageComponent;

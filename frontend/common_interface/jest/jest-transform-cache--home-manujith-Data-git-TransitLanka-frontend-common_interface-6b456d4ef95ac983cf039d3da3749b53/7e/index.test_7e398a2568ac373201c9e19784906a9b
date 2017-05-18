@@ -1,0 +1,20 @@
+/* istanbul ignore next */'use strict';var _jsxFileName = '/home/manujith/Data/git/TransitLanka/frontend/common_interface/src/pages/SearchResultPage/component/index.test.js';var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_reactTestRenderer = require('react-test-renderer'); /* istanbul ignore next */var _reactTestRenderer2 = _interopRequireDefault(_reactTestRenderer);
+var /* istanbul ignore next */_reactRedux = require('react-redux');
+var /* istanbul ignore next */_redux = require('redux');
+var /* istanbul ignore next */_reduxThunk = require('redux-thunk'); /* istanbul ignore next */var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+var /* istanbul ignore next */_ = require('./'); /* istanbul ignore next */var _2 = _interopRequireDefault(_);
+var /* istanbul ignore next */_reducers = require('../../../reducers'); /* istanbul ignore next */var _reducers2 = _interopRequireDefault(_reducers);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+var store = /* istanbul ignore next */(0, _redux.createStore)( /* istanbul ignore next */_reducers2.default, /* istanbul ignore next */(0, _redux.applyMiddleware)( /* istanbul ignore next */_reduxThunk2.default));
+
+
+
+it('renders Search Results Page correctly', function () {
+  var tree = /* istanbul ignore next */_reactTestRenderer2.default.create(
+  /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_reactRedux.Provider, /* istanbul ignore next */{ store: store, __source: { fileName: _jsxFileName, lineNumber: 15 }, __self: undefined },
+    /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_2.default, /* istanbul ignore next */{ startText: 'Pettah', endText: 'Moratuwa', __source: { fileName: _jsxFileName, lineNumber: 16 }, __self: undefined }))).
+
+  toJSON();
+  expect(tree).toMatchSnapshot();
+});

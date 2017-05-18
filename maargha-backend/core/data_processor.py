@@ -10,6 +10,7 @@ from models.Road import Road
 from models.RouteLocation import RouteLocation
 from models.Query import RouteQuery,RouteQueryResponse
 from core import route_processor
+from core import query_processor
 import random
 
 '''Constants'''
@@ -87,14 +88,16 @@ def get_training_set():
     from_node = find_random_node()
     to_node = find_random_node()
 
-    query = RouteQuery(
-        fromNode = from_node.key,
-        toNode = to_node.key
-    )
-    query.put()
-
-    route_processor.path_search(from_node,to_node,[],0,0,[from_node.node],[],query.key,True,True)
-    response = RouteQueryResponse.query(RouteQueryResponse.routeQuery==query.key)
+    # query = RouteQuery(
+    #     fromNode = from_node.key,
+    #     toNode = to_node.key
+    # )
+    # query.put()
+    #
+    # route_processor.path_search(from_node,to_node,[],0,0,[from_node.node],[],query.key,True,True)
+    query = query_processor.make_path_query(from_node.key.id(),to_node.key.id(),True,True)
+    query_key = ndb.Key(urlsafe=query)
+    response = RouteQueryResponse.query(RouteQueryResponse.routeQuery==query_key)
     if response.count() > 1:
         return (
             response.fetch(5),from_node.node,to_node.node

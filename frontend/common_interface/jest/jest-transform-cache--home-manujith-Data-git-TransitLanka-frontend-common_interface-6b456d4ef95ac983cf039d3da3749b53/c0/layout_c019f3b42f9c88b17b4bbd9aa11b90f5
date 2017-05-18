@@ -1,0 +1,13 @@
+/* istanbul ignore next */"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.
+
+
+
+
+layout = layout;var initialState = {};function layout() {/* istanbul ignore next */var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState; /* istanbul ignore next */var action = arguments[1];
+  switch (action.type) {
+    default:
+      return state;}
+
+} /* istanbul ignore next */exports.default =
+
+layout;

@@ -10,6 +10,7 @@ from models.Interims import InterimRoute,InterimRecord
 from models.Location import Location
 from models.Query import RouteQuery,RouteQueryResponse
 from core import data_processor
+from core import query_processor
 import json
 from google.appengine.ext import ndb
 from google.appengine.api import memcache
@@ -121,39 +122,42 @@ class Query(graphene.ObjectType):
             else:
                 enableTrains = True
 
-            enable_trains_key = 0
-            if not enable_trains:
-                enable_trains_key = 1
+            return query_processor.make_path_query(long(args['fromNode']),long(args['toNode']),enable_trains)
+        return ""
 
-            memcache_key = "%s//%s//%d" % (args['fromNode'],args['toNode'],enable_trains_key)
-            memcache_data = memcache.get(memcache_key)
-
-            if memcache_data != None:
-                query_key = memcache_data
-            else:
-                from_node = Location.get_by_id(long(args['fromNode']))
-                to_node = Location.get_by_id(long(args['toNode']))
-
-                if (not from_node) or (not to_node):
-                    return None
-
-                query = RouteQuery(
-                    fromNode = from_node.key,
-                    toNode = to_node.key
-                )
-                query.put()
-
-                memcache.add(
-                    key=memcache_key,
-                    value=query.key,
-                    time=86400
-                )
-
-                route_processor.path_search(from_node,to_node,[],0,0,[from_node.node],[],query.key,enable_trains)
-                query_key = query.key
-                #find responses
-                # print RouteQueryResponse.query(RouteQueryResponse.routeQuery==query.key).get()
-            return query_key.urlsafe()
+            # enable_trains_key = 0
+            # if not enable_trains:
+            #     enable_trains_key = 1
+            #
+            # memcache_key = "%s//%s//%d" % (args['fromNode'],args['toNode'],enable_trains_key)
+            # memcache_data = memcache.get(memcache_key)
+            #
+            # if memcache_data != None:
+            #     query_key = memcache_data
+            # else:
+            #     from_node = Location.get_by_id(long(args['fromNode']))
+            #     to_node = Location.get_by_id(long(args['toNode']))
+            #
+            #     if (not from_node) or (not to_node):
+            #         return None
+            #
+            #     query = RouteQuery(
+            #         fromNode = from_node.key,
+            #         toNode = to_node.key
+            #     )
+            #     query.put()
+            #
+            #     memcache.add(
+            #         key=memcache_key,
+            #         value=query.key,
+            #         time=86400
+            #     )
+            #
+            #     route_processor.path_search(from_node,to_node,[],0,0,[from_node.node],[],query.key,enable_trains)
+            #     query_key = query.key
+            #     #find responses
+            #     # print RouteQueryResponse.query(RouteQueryResponse.routeQuery==query.key).get()
+            # return query_key.urlsafe()
 
     def resolve_QueryResults(self, args, context, info):
         if args and len(args) == 1:

@@ -1,0 +1,25 @@
+/* istanbul ignore next */"use strict";Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = "/home/manujith/Data/git/TransitLanka/frontend/common_interface/src/components/TrainCheck/index.js";var /* istanbul ignore next */_react = require("react"); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+var TrainCheck = function TrainCheck(props) {
+  return (
+    /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */"div", /* istanbul ignore next */{ className: "row", __source: { fileName: _jsxFileName, lineNumber: 5 }, __self: undefined },
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */"div", /* istanbul ignore next */{ className: "small-8 columns", style: { paddingLeft: '0px', textAlign: 'left' }, __source: { fileName: _jsxFileName, lineNumber: 6 }, __self: undefined }, /* istanbul ignore next */"I want to check trains too?"),
+
+
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */"div", /* istanbul ignore next */{ className: "small-4 columns end", style: { paddingRight: '0px', textAlign: 'right' }, __source: { fileName: _jsxFileName, lineNumber: 9 }, __self: undefined },
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */"div", /* istanbul ignore next */{ className: "switch large", __source: { fileName: _jsxFileName, lineNumber: 10 }, __self: undefined },
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */"input", /* istanbul ignore next */{ className: "switch-input", id: "yes-no", type: "checkbox",
+            onChange: function /* istanbul ignore next */onChange() {props.onChange(!props.enableTrains);},
+            checked: props.enableTrains, __source: { fileName: _jsxFileName, lineNumber: 11 }, __self: undefined }),
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */"label", /* istanbul ignore next */{ className: "switch-paddle", htmlFor: "yes-no", __source: { fileName: _jsxFileName, lineNumber: 14 }, __self: undefined },
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */"span", /* istanbul ignore next */{ className: "show-for-sr", __source: { fileName: _jsxFileName, lineNumber: 15 }, __self: undefined }, /* istanbul ignore next */"Do you like me?"),
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */"span", /* istanbul ignore next */{ className: "switch-active", /* istanbul ignore next */"aria-hidden": "true", __source: { fileName: _jsxFileName, lineNumber: 16 }, __self: undefined }, /* istanbul ignore next */"Yes"),
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */"span", /* istanbul ignore next */{ className: "switch-inactive", /* istanbul ignore next */"aria-hidden": "true", __source: { fileName: _jsxFileName, lineNumber: 17 }, __self: undefined }, /* istanbul ignore next */"No"))))));
+
+
+
+
+
+}; /* istanbul ignore next */exports.default =
+
+TrainCheck;

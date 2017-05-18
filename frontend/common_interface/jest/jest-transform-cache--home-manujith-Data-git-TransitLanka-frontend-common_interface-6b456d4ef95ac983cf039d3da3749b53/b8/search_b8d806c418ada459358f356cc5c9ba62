@@ -1,0 +1,16 @@
+/* istanbul ignore next */"use strict";Object.defineProperty(exports, "__esModule", { value: true });exports.
+
+
+selectLocation = selectLocation; /* istanbul ignore next */exports.
+
+
+
+
+
+
+setUseTrains = setUseTrains;var SELECT_LOCATION = /* istanbul ignore next */exports.SELECT_LOCATION = "SELECT_LOCATION";var SET_ENABLE_TRAIN = /* istanbul ignore next */exports.SET_ENABLE_TRAIN = "SET_ENABLE_TRAIN";function selectLocation(location_name, txt_input) {return { type: SELECT_LOCATION, location_name: location_name, txt_input: txt_input };}function setUseTrains(isEnabled) {
+  return {
+    type: SET_ENABLE_TRAIN,
+    isEnabled: isEnabled };
+
+}

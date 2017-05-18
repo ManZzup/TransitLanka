@@ -1,0 +1,71 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/home/manujith/Data/git/TransitLanka/frontend/common_interface/src/containers/ResultsContainer.js';var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_reactRedux = require('react-redux');
+var /* istanbul ignore next */_redux = require('redux');
+
+var /* istanbul ignore next */_API = require('../actions/API'); /* istanbul ignore next */var API = _interopRequireWildcard(_API);
+var /* istanbul ignore next */_ResultsComponent = require('../components/ResultsComponent'); /* istanbul ignore next */var _ResultsComponent2 = _interopRequireDefault(_ResultsComponent);function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self, call) {if (!self) {throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call && (typeof call === "object" || typeof call === "function") ? call : self;}function _inherits(subClass, superClass) {if (typeof superClass !== "function" && superClass !== null) {throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);}subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;}var
+
+ResultsContainer = function (_Component) {_inherits(ResultsContainer, _Component);function ResultsContainer() {_classCallCheck(this, ResultsContainer);return _possibleConstructorReturn(this, (ResultsContainer.__proto__ || Object.getPrototypeOf(ResultsContainer)).apply(this, arguments));}_createClass(ResultsContainer, [{ key: 'componentDidMount', value: function componentDidMount()
+    {
+      if (window.$) {
+        window.$(document).foundation();
+      }
+    } }, { key: 'componentDidUpdate', value: function componentDidUpdate()
+    {
+      this.componentDidMount();
+    } }, { key: 'render', value: function render()
+    {
+      var resultSet = [];
+      for (var i = 0; i < this.props.results.length; i++) {
+        if (this.props.hasSelectedResponse) {
+          if (this.props.results[i].key !== this.props.selectedResponse) {
+            continue;
+          }
+        }
+        var title = "";
+        var nodeSet = [];
+        var routes = this.props.results[i].routes;
+        var nodes = this.props.results[i].nodes;
+
+        for (var j = 0; j < routes.length; j++) {
+          title += j === 0 ? routes[j] : " → " + routes[j];
+          nodeSet.push({
+            route: routes[j],
+            start: nodes[j],
+            end: nodes[j + 1],
+            mode: routes[j][0] === "T" ? "train" : "bus" });
+
+        }
+
+        var result = {
+          key: this.props.results[i].key,
+          title: title,
+          nodes: nodeSet };
+
+        resultSet.push(result);
+      }
+      console.log(resultSet);
+      return (
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_ResultsComponent2.default, /* istanbul ignore next */{ results: resultSet,
+          onSelectResponse: this.props.api.apiSelectPath,
+          hasSelectedResponse: this.props.hasSelectedResponse,
+          hasTrainingSet: this.props.hasTrainingSet, __source: { fileName: _jsxFileName, lineNumber: 49 }, __self: this }));
+
+    } }]);return ResultsContainer;}(_react.Component);
+
+
+function mapStateToProps(state) {
+  return {
+    results: state.search.results,
+    hasSelectedResponse: state.search.has_selected_response,
+    selectedResponse: state.search.selected_response_key,
+    hasTrainingSet: state.search.has_training_set };
+
+}
+function mapDispatchToProps(dispatch) {
+  return {
+    api: /* istanbul ignore next */(0, _redux.bindActionCreators)(API, dispatch) };
+
+} /* istanbul ignore next */exports.default =
+
+/* istanbul ignore next */(0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ResultsContainer);

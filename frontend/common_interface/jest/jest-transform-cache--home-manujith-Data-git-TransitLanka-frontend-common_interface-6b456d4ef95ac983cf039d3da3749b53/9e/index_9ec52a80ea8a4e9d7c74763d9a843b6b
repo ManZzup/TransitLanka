@@ -1,0 +1,28 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/home/manujith/Data/git/TransitLanka/frontend/common_interface/src/components/SearchButton/index.js';var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_CSSTransitionGroup = require('react-transition-group/CSSTransitionGroup'); /* istanbul ignore next */var _CSSTransitionGroup2 = _interopRequireDefault(_CSSTransitionGroup);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+var SearchButton = function SearchButton(props) /* istanbul ignore next */{return (
+    /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'row', __source: { fileName: _jsxFileName, lineNumber: 5 }, __self: undefined },
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CSSTransitionGroup2.default, /* istanbul ignore next */{
+          transitionName: props.homeButton ? "home_tran_btn_left_slide" : "tran_btn_left_slide",
+          transitionEnterTimeout: 1000,
+          transitionLeaveTimeout: 300, __source: { fileName: _jsxFileName, lineNumber: 6 }, __self: undefined },
+        !props.loadButton &&
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'input', /* istanbul ignore next */{ type: 'button', className: 'button warning', value: 'Do MAGIC!', onClick: props.onSearch, __source: { fileName: _jsxFileName, lineNumber: 11 }, __self: undefined })),
+
+
+
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_CSSTransitionGroup2.default, /* istanbul ignore next */{
+          transitionName: props.homeButton ? "home_tran_btn_left_slide" : "tran_btn_left_slide",
+          transitionEnterTimeout: 1000,
+          transitionLeaveTimeout: 300, __source: { fileName: _jsxFileName, lineNumber: 15 }, __self: undefined },
+        props.loadButton &&
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'span', /* istanbul ignore next */{ href: '#', onClick: function /* istanbul ignore next */onClick() {return false;}, className: 'button warning', __source: { fileName: _jsxFileName, lineNumber: 20 }, __self: undefined },
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'img', /* istanbul ignore next */{ src: '/assets/gear.gif', width: '40px', alt: '', __source: { fileName: _jsxFileName, lineNumber: 21 }, __self: undefined })))));}; /* istanbul ignore next */exports.default =
+
+
+
+
+
+
+SearchButton;

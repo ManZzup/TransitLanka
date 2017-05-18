@@ -1,0 +1,9 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var /* istanbul ignore next */_redux = require('redux');
+var /* istanbul ignore next */_layout = require('./layout'); /* istanbul ignore next */var _layout2 = _interopRequireDefault(_layout);
+var /* istanbul ignore next */_search = require('./search'); /* istanbul ignore next */var _search2 = _interopRequireDefault(_search);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+var rootReducer = /* istanbul ignore next */(0, _redux.combineReducers)({
+  layout: /* istanbul ignore next */_layout2.default, search: /* istanbul ignore next */_search2.default }); /* istanbul ignore next */exports.default =
+
+
+rootReducer;

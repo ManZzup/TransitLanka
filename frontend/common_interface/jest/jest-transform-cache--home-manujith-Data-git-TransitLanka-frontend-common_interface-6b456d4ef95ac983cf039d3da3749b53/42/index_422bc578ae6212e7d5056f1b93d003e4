@@ -1,0 +1,56 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/home/manujith/Data/git/TransitLanka/frontend/common_interface/src/pages/SearchResultPage/component/index.js';var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_PlacesAutocompleteContainer = require('../../../containers/PlacesAutocompleteContainer'); /* istanbul ignore next */var _PlacesAutocompleteContainer2 = _interopRequireDefault(_PlacesAutocompleteContainer);
+var /* istanbul ignore next */_ResultsContainer = require('../../../containers/ResultsContainer'); /* istanbul ignore next */var _ResultsContainer2 = _interopRequireDefault(_ResultsContainer);
+var /* istanbul ignore next */_SearchButtonContainer = require('../../../containers/SearchButtonContainer'); /* istanbul ignore next */var _SearchButtonContainer2 = _interopRequireDefault(_SearchButtonContainer);
+var /* istanbul ignore next */_TrainCheckContainer = require('../../../containers/TrainCheckContainer'); /* istanbul ignore next */var _TrainCheckContainer2 = _interopRequireDefault(_TrainCheckContainer);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+var style = {
+  wrapper: {},
+
+  column_1: {
+    height: '100vh',
+    boxShadow: '2px 1px 3px 1px #ccc' },
+
+  heading: {
+    fontFamily: ['Open Sans Condensed', 'sans-serif'] } };
+
+
+
+var SearchResultPageComponent = function SearchResultPageComponent(props) /* istanbul ignore next */{return (
+    /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: '', __source: { fileName: _jsxFileName, lineNumber: 20 }, __self: undefined },
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'large-4 small-12 columns', style: style.column_1, __source: { fileName: _jsxFileName, lineNumber: 21 }, __self: undefined },
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ style: style.wrapper, __source: { fileName: _jsxFileName, lineNumber: 22 }, __self: undefined },
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'a', /* istanbul ignore next */{ href: '#', __source: { fileName: _jsxFileName, lineNumber: 23 }, __self: undefined },
+            /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'h1', /* istanbul ignore next */{ style: style.heading, __source: { fileName: _jsxFileName, lineNumber: 24 }, __self: undefined },
+              /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'font', /* istanbul ignore next */{ color: '#1C6BA0', __source: { fileName: _jsxFileName, lineNumber: 25 }, __self: undefined }, /* istanbul ignore next */'transit'), /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'font', /* istanbul ignore next */{ color: '#ffae00', __source: { fileName: _jsxFileName, lineNumber: 25 }, __self: undefined }, /* istanbul ignore next */'Lanka'))),
+
+
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_PlacesAutocompleteContainer2.default, /* istanbul ignore next */{
+            label: 'I am at',
+            id: 'txt_start',
+            placeholder: 'Select start location',
+            value: props.startText, __source: { fileName: _jsxFileName, lineNumber: 28 }, __self: undefined }),
+
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_PlacesAutocompleteContainer2.default, /* istanbul ignore next */{
+            label: 'I am going',
+            id: 'txt_end',
+            placeholder: 'Select end location',
+            value: props.endText, __source: { fileName: _jsxFileName, lineNumber: 34 }, __self: undefined }),
+
+
+          /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_TrainCheckContainer2.default, /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 41 }, __self: undefined })),
+
+
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_SearchButtonContainer2.default, /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 44 }, __self: undefined })),
+
+
+
+
+
+      /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */'div', /* istanbul ignore next */{ className: 'large-7 small-12 columns end', __source: { fileName: _jsxFileName, lineNumber: 50 }, __self: undefined },
+        /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_ResultsContainer2.default, /* istanbul ignore next */{ __source: { fileName: _jsxFileName, lineNumber: 51 }, __self: undefined }))));}; /* istanbul ignore next */exports.default =
+
+
+
+
+SearchResultPageComponent;

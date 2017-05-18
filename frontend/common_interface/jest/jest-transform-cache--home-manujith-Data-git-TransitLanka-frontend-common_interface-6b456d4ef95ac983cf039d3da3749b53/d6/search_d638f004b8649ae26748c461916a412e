@@ -1,0 +1,82 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+search = search;var /* istanbul ignore next */_API = require('../actions/API');var /* istanbul ignore next */_search = require('../actions/search');var initialState = { locations: [], start_location: "", end_location: "", start_txt: "", end_txt: "", results: [], showLoading: false, has_training_set: false, training_set_start: "", training_set_end: "", has_selected_response: false, selected_response_key: "", enableTrains: true };function search() {/* istanbul ignore next */var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState; /* istanbul ignore next */var action = arguments[1];
+  switch (action.type) {
+    case /* istanbul ignore next */_API.SEARCH_LOCATION_SUCCESS:
+      return (/* istanbul ignore next */Object.assign({},
+        state, { locations: action.locations }));
+
+    case /* istanbul ignore next */_search.SELECT_LOCATION:
+      var key = "";
+      for (var i = 0; i < state.locations.length; i++) {
+        if (state.locations[i].node === action.location_name) {
+          key = state.locations[i].key;
+          break;
+        }
+      }
+
+      if (action.txt_input === "txt_start") {
+        return (/* istanbul ignore next */Object.assign({},
+          state, { start_location: key, start_txt: action.location_name }));
+
+      } else {
+        return (/* istanbul ignore next */Object.assign({},
+          state, { end_location: key, end_txt: action.location_name }));
+
+      }
+    case /* istanbul ignore next */_API.FIND_PATH_SUCCESS:
+      return (/* istanbul ignore next */Object.assign({},
+        state, { results: action.results, showLoading: false }));
+
+    case /* istanbul ignore next */_API.FIND_PATH_FAIL:
+      return (/* istanbul ignore next */Object.assign({},
+        state, { results: [], showLoading: false }));
+
+    case /* istanbul ignore next */_API.FIND_PATH:
+      return (/* istanbul ignore next */Object.assign({},
+        state, { showLoading: true, results: [], has_selected_response: false }));
+
+    case /* istanbul ignore next */_API.GET_TRAINING_SET_SUCCESS:
+      return (/* istanbul ignore next */Object.assign({},
+        state, { results: action.results, showLoading: false,
+          training_set_start: action.start, training_set_end: action.end, has_training_set: true,
+          has_selected_response: false }));
+
+    case /* istanbul ignore next */_API.GET_TRAINING_SET:
+      return (/* istanbul ignore next */Object.assign({},
+        state, { showLoading: true, has_selected_response: false }));
+
+    case /* istanbul ignore next */_API.SELECT_PATH:
+      return (/* istanbul ignore next */Object.assign({},
+        state, { has_selected_response: true, selected_response_key: action.response }));
+
+    case /* istanbul ignore next */_search.SET_ENABLE_TRAIN:
+      return (/* istanbul ignore next */Object.assign({},
+        state, { enableTrains: action.isEnabled }));
+
+    default:
+      return state;}
+
+} /* istanbul ignore next */exports.default =
+
+search;

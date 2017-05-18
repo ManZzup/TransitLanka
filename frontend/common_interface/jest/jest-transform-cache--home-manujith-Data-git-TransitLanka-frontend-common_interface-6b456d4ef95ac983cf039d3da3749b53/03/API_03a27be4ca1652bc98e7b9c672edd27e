@@ -1,0 +1,281 @@
+/* istanbul ignore next */'use strict';Object.defineProperty(exports, "__esModule", { value: true });exports.GET_TRAINING_SET_FAIL = exports.GET_TRAINING_SET_SUCCESS = exports.GET_TRAINING_SET = exports.SELECT_PATH_FAIL = exports.SELECT_PATH_SUCCESS = exports.SELECT_PATH = exports.FIND_PATH_FAIL = exports.FIND_PATH_SUCCESS = exports.FIND_PATH = exports.SEARCH_LOCATION_FAIL = exports.SEARCH_LOCATION_SUCCESS = exports.SEARCH_LOCATION = undefined;exports.
+
+
+
+
+
+
+
+
+
+
+
+
+searchLocation = searchLocation; /* istanbul ignore next */exports.
+
+
+
+
+
+searchLocationSuccess = searchLocationSuccess; /* istanbul ignore next */exports.
+
+
+
+
+
+
+searchLocationFail = searchLocationFail; /* istanbul ignore next */exports.
+
+
+
+
+
+apiSearchLocation = apiSearchLocation; /* istanbul ignore next */exports.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+findPath = findPath; /* istanbul ignore next */exports.
+
+
+
+
+
+findPathSuccess = findPathSuccess; /* istanbul ignore next */exports.
+
+
+
+
+
+
+
+
+findPathFail = findPathFail; /* istanbul ignore next */exports.
+
+
+
+
+
+apiFindPath = apiFindPath; /* istanbul ignore next */exports.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+selectPath = selectPath; /* istanbul ignore next */exports.
+
+
+
+
+
+
+selectPathSuccess = selectPathSuccess; /* istanbul ignore next */exports.
+
+
+
+
+
+selectPathFail = selectPathFail; /* istanbul ignore next */exports.
+
+
+
+
+
+
+apiSelectPath = apiSelectPath; /* istanbul ignore next */exports.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+getTrainingSet = getTrainingSet; /* istanbul ignore next */exports.
+
+
+
+
+
+getTrainingSetSuccess = getTrainingSetSuccess; /* istanbul ignore next */exports.
+
+
+
+
+
+
+
+
+
+
+getTrainingSetFail = getTrainingSetFail; /* istanbul ignore next */exports.
+
+
+
+
+
+
+apiGetTrainingSet = apiGetTrainingSet;var /* istanbul ignore next */_isomorphicFetch = require('isomorphic-fetch'); /* istanbul ignore next */var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);var /* istanbul ignore next */_reactRouter = require('react-router'); /* istanbul ignore next */function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var API_BASE = "http://localhost:8080/api/"; // export const API_BASE = "https://transitlanka-158812.appspot.com/api/";
+var POLL_RETRY_TIMEOUT = 800;var POLL_RETRY_COUNT = 20;var MAX_RESULT_COUNT = 3;var SEARCH_LOCATION = /* istanbul ignore next */exports.SEARCH_LOCATION = "SEARCH_LOCATION";var SEARCH_LOCATION_SUCCESS = /* istanbul ignore next */exports.SEARCH_LOCATION_SUCCESS = "SEARCH_LOCATION_SUCCESS";var SEARCH_LOCATION_FAIL = /* istanbul ignore next */exports.SEARCH_LOCATION_FAIL = "SEARCH_LOCATION_FAIL";function searchLocation() {return { type: SEARCH_LOCATION };}function searchLocationSuccess(locations) {return { type: SEARCH_LOCATION_SUCCESS, locations: locations };}function searchLocationFail() {return { type: SEARCH_LOCATION_FAIL };}function apiSearchLocation(str) {return function (dispatch) {if (str.length < 3) {return dispatch(searchLocationFail());}dispatch(searchLocation());var query = `{
+      Locations(search : "` + str + `") {
+        key, node
+      }
+    }`;return (/* istanbul ignore next */(0, _isomorphicFetch2.default)(API_BASE + "query", { method: 'POST', body: query }).then(function (response) /* istanbul ignore next */{return response.json();}).then(function (json) {dispatch(searchLocationSuccess(json['Locations']));}).catch(function (error) {dispatch(searchLocationFail());}));};}var FIND_PATH = /* istanbul ignore next */exports.FIND_PATH = "FIND_PATH";var FIND_PATH_SUCCESS = /* istanbul ignore next */exports.FIND_PATH_SUCCESS = "FIND_PATH_SUCCESS";var FIND_PATH_FAIL = /* istanbul ignore next */exports.FIND_PATH_FAIL = "FIND_PATH_FAIL";function findPath() {return { type: FIND_PATH };}function findPathSuccess(results) {console.log("dispatching"); /* istanbul ignore next */_reactRouter.hashHistory.push('/result');return { type: FIND_PATH_SUCCESS, results: results };}function findPathFail() {return { type: FIND_PATH_FAIL };}function apiFindPath() {return function (dispatch, getState) {if (window.resultPoll) {clearInterval(window.resultPoll);}dispatch(findPath());var start_node = getState().search.start_location;var end_node = getState().search.end_location;var enableTrains = getState().search.enableTrains;if (start_node === "" || end_node === "") {return dispatch(findPathFail());}var query = `{
+      Query(fromNode : "` + start_node + `", toNode : "` + end_node + `", enableTrains: ` + enableTrains + `)
+    }`;return (/* istanbul ignore next */(0, _isomorphicFetch2.default)(API_BASE + "query", { method: 'POST', body: query }).then(function (response) /* istanbul ignore next */{return response.json();}).then(function (json) {var queryKey = json['Query'];window.pollCount = 0;window.resultPoll = setInterval(function () {dispatch(checkResults(queryKey));}, POLL_RETRY_TIMEOUT);;}).catch(function (error) {dispatch(findPathFail());}));};}function checkResults(queryKey) {return function (dispatch, getState) {var query = `{
+      QueryResults(queryKey: "` + queryKey + `"){
+        key,nodes,routes,hops
+      }
+    }`;return (/* istanbul ignore next */(0, _isomorphicFetch2.default)(API_BASE + "query", { method: 'POST', body: query }).then(function (response) /* istanbul ignore next */{return response.json();}).then(function (json) {window.pollCount++;if (json['QueryResults'].length >= MAX_RESULT_COUNT) {clearInterval(window.resultPoll);dispatch(findPathSuccess(json['QueryResults']));} else if (json['QueryResults'].length > 0) {dispatch(findPathSuccess(json['QueryResults']));}if (window.pollCount >= POLL_RETRY_COUNT) {clearInterval(window.resultPoll);if (json['QueryResults'].length === 0) {dispatch(findPathFail());}}}).catch(function (error) {clearInterval(window.resultPoll);dispatch(findPathFail());}));};}var SELECT_PATH = /* istanbul ignore next */exports.SELECT_PATH = "SELECT_PATH";var SELECT_PATH_SUCCESS = /* istanbul ignore next */exports.SELECT_PATH_SUCCESS = "SELECT_PATH_SUCCESS";var SELECT_PATH_FAIL = /* istanbul ignore next */exports.SELECT_PATH_FAIL = "SELECT_PATH_FAIL";function selectPath(response) {return { type: SELECT_PATH, response: response };}function selectPathSuccess() {return { type: SELECT_PATH_SUCCESS };}function selectPathFail() {console.log("TODO: failed to get path");return { type: SELECT_PATH_FAIL };}function apiSelectPath(responseKey) {return function (dispatch, getState) {dispatch(selectPath(responseKey));var query = `{
+            	ResponseSelection(response: "` + responseKey + `")
+            }`;return (/* istanbul ignore next */(0, _isomorphicFetch2.default)(API_BASE + "query", { method: 'POST', body: query }).then(function (response) /* istanbul ignore next */{return response.json();}).then(function (json) {if (json['ResponseSelection'] === 'ok') {dispatch(selectPathSuccess());} else {dispatch(selectPathFail());}}).catch(function (error) {dispatch(selectPathFail());}));};}var GET_TRAINING_SET = /* istanbul ignore next */exports.GET_TRAINING_SET = "GET_TRAINING_SET";var GET_TRAINING_SET_SUCCESS = /* istanbul ignore next */exports.GET_TRAINING_SET_SUCCESS = "GET_TRAINING_SET_SUCCESS";var GET_TRAINING_SET_FAIL = /* istanbul ignore next */exports.GET_TRAINING_SET_FAIL = "GET_TRAINING_SET_FAIL";function getTrainingSet() {return { type: GET_TRAINING_SET };}function getTrainingSetSuccess(results) {// browserHistory.push('/result');
+  console.log(results);return { type: GET_TRAINING_SET_SUCCESS, results: results[0]['results'], start: results[0]['start'], end: results[0]['end'] };}function getTrainingSetFail() {console.log("TODO: failed to get path");return { type: GET_TRAINING_SET_FAIL };}function apiGetTrainingSet() {return function (dispatch, getState) {dispatch(findPath());var query = `{
+            	TrainingSet{
+            		start,end,
+            		results{
+            			key,routes,hops,nodes
+            		}
+            	}
+            }`;return (/* istanbul ignore next */(0, _isomorphicFetch2.default)(API_BASE + "query", { method: 'POST', body: query }).then(function (response) /* istanbul ignore next */{return response.json();}).then(function (json) {
+        dispatch(getTrainingSetSuccess(json['TrainingSet']));
+      }).
+      catch(function (error) {
+        dispatch(getTrainingSetFail());
+      }));
+  };
+}

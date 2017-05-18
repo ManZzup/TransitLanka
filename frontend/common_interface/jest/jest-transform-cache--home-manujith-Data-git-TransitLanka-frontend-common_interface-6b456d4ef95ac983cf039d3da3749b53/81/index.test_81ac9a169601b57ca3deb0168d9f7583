@@ -1,0 +1,10 @@
+/* istanbul ignore next */'use strict';var _jsxFileName = '/home/manujith/Data/git/TransitLanka/frontend/common_interface/src/components/PlacesAutocomplete/index.test.js';var /* istanbul ignore next */_react = require('react'); /* istanbul ignore next */var _react2 = _interopRequireDefault(_react);
+var /* istanbul ignore next */_ = require('./'); /* istanbul ignore next */var _2 = _interopRequireDefault(_);
+var /* istanbul ignore next */_reactTestRenderer = require('react-test-renderer'); /* istanbul ignore next */var _reactTestRenderer2 = _interopRequireDefault(_reactTestRenderer);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+it('renders autocomplete text input correctly', function () {
+  var tree = /* istanbul ignore next */_reactTestRenderer2.default.create(
+  /* istanbul ignore next */_react2.default.createElement( /* istanbul ignore next */_2.default, /* istanbul ignore next */{ label: 'Test Input', placeholder: 'Test Input', defaultValue: 'Test Input', id: '0', __source: { fileName: _jsxFileName, lineNumber: 7 }, __self: undefined })).
+  toJSON();
+  expect(tree).toMatchSnapshot();
+});

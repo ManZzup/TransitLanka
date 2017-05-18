@@ -1,5 +1,5 @@
-const API_BASE = "http://10.0.2.2:8080/api/";
-// export const API_BASE = "https://transitlanka-158812.appspot.com/api/";
+// const API_BASE = "http://10.0.2.2:8080/api/";
+export const API_BASE = "https://transitlanka-158812.appspot.com/api/";
 const POLL_RETRY_TIMEOUT = 800;
 const POLL_RETRY_COUNT = 20;
 const MAX_RESULT_COUNT = 3;
@@ -95,7 +95,7 @@ export function apiFindPath(){
     var end_node = getState().search.endLocationKey;
 
     var query = `{
-      Query(fromNode : "`+ start_node +`", toNode : "`+ end_node +`")
+      Query(fromNode : "`+ start_node +`", toNode : "`+ end_node +`", enableTrains: true)
     }`;
 
     return fetch(
